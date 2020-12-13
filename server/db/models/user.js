@@ -9,7 +9,8 @@ const UserSchema = new Schema(
         name: { 
             type: String, 
             required: true, 
-            trim: true, }, 
+            trim: true, 
+        }, 
         email: { 
             type: String, 
             required: true, 
@@ -102,5 +103,5 @@ userSchema.pre('save', async function (next) {
         next();
 });
 
-const User = mongoose.model('User"', UserSchema);
+const User = mongoose.model('User', UserSchema);
 module.exports = { User };
