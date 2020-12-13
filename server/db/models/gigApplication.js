@@ -7,7 +7,9 @@ const GigApplication = new Schema(
         equipment: [{ type: String }],
         musicLink: { type: String },
     },
-    { timestamps: true }
+    { 
+        timestamps: true 
+    }
 );
 
 const GigApplication = mongoose.model("GigApplication", GigApplicationSchema);

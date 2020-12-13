@@ -2,11 +2,23 @@ const Schema = mongoose.Schema;
 
 const ChatSchema = new Schema(
     {
-        messages: [{ type: String, required: true }],
-        sender: { type: String, required: true },
-        read: { type: Date },
+        messages: [
+            { 
+                type: String, 
+                required: true 
+            }
+        ],
+        sender: { 
+            type: String, 
+            required: true 
+        },
+        read: { 
+            type: Date 
+        },
     },
-    { timestamps: true }
+    { 
+        timestamps: true 
+    }
 );
 
 const Chat = mongoose.model("Chat", ChatSchema);
