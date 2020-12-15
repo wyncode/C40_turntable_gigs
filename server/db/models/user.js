@@ -50,12 +50,12 @@ const UserSchema = new Schema(
     location: {
       type: String
     },
-    venueName: {
+    venue: {
       type: Boolean,
       required: true,
       default: false
     },
-    djName: {
+    dj: {
       type: Boolean,
       required: true,
       default: false
