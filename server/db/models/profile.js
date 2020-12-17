@@ -1,6 +1,6 @@
 const Schema = mongoose.Schema;
 
-const ProfileSchema = new Schema({
+const profileSchema = new Schema({
   about: {
     type: String
   },
@@ -39,5 +39,5 @@ const ProfileSchema = new Schema({
   }
 });
 
-const Profile = mongoose.model('Profile', ProfileSchema);
-module.exports = { Profile };
+const Profile = mongoose.model('Profile', profileSchema);
+module.exports = Profile;

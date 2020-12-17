@@ -1,41 +1,45 @@
 const Schema = mongoose.Schema;
 
-const GigPostSchema = new Schema(
-    {
-        timeframe: { 
-            type: String, 
-            required: true 
-        },
-        location: { 
-            type: String, 
-            required: true 
-        },
-        equipment: [
-            { 
-                type: String, 
-                required: true 
-            }
-        ],
-        pay: { 
-            type: Number, 
-            required: true 
-        },
-        description: { 
-            type: String, 
-            required: true 
-        },
-        genre: { 
-            type: String, 
-            required: true 
-        },
-        photos: { 
-            type: String 
-        },
+const gigPostSchema = new Schema(
+  {
+    timeframe: {
+      type: String,
+      required: true
     },
-    { 
-        timestamps: true 
+    location: {
+      type: String,
+      required: true
+    },
+    equipment: [
+      {
+        type: String,
+        required: true
+      }
+    ],
+    pay: {
+      type: Number,
+      required: true
+    },
+    description: {
+      type: String,
+      required: true
+    },
+    genre: {
+      type: String,
+      required: true
+    },
+    photos: {
+      type: String
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     }
+  },
+  {
+    timestamps: true
+  }
 );
 
-const GigPost = mongoose.model("GigPost", GigPostSchema);
-module.exports = { GigPost };
+const GigPost = mongoose.model('GigPost', gigPostSchema);
+module.exports = GigPost;

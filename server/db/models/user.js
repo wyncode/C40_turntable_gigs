@@ -2,9 +2,11 @@ const Schema = mongoose.Schema;
 const mongoose = require('mongoose'),
   validator = require('validator'),
   bcrypt = require('bcryptjs'),
-  jwt = require('jsonwebtoken');
+  jwt = require('jsonwebtoken'),
+  Profile = require('./Profile'),
+  GigPost = require('./GigPost');
 
-const UserSchema = new Schema(
+const userSchema = new Schema(
   {
     name: {
       type: String,
@@ -102,5 +104,33 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-const User = mongoose.model('User', UserSchema);
-module.exports = { User };
+userSchema.virtual('gigPosts', {
+  ref: 'GigPost',
+  localField: '_id',
+  foreignField: 'owner'
+});
+
+userSchema.virtual('profiles', {
+  ref: 'Profile',
+  localField: '_id',
+  foreignField: 'owner'
+});
+
+userSchema.pre('remove', async function (next) {
+  const user = this;
+  await Profile.deleteMany({
+    owner: user._id
+  });
+  next();
+});
+
+userSchema.pre('remove', async function (next) {
+  const user = this;
+  await GigPost.deleteMany({
+    owner: user._id
+  });
+  next();
+});
+
+const User = mongoose.model('User', userSchema);
+module.exports = User;
