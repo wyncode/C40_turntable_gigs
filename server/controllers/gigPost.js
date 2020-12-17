@@ -5,7 +5,7 @@ exports.createGigPost = async (req, res) => {
 
   gigPost.save(function (err, doc) {
     if (err) return res.status(400).send(err);
-    res.send(doc);
+    res.json(doc);
   });
 };
 
