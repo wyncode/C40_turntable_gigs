@@ -24,10 +24,17 @@ if (process.env.NODE_ENV === 'production') {
 
 // Any authentication middleware and related routing would be here.
 
+app.use('/api/users', userRouter);
+app.use('/api/bookings', bookingRouter);
+app.use('/api/chats', chatsRouter);
+app.use('/api/gigApplication', gigApplicationRouter);
+app.use('/api/profiles', profilesRouter);
+
 // Handle React routing, return all requests to React app
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (request, response) => {
     response.sendFile(path.join(__dirname, '../client/build', 'index.html'));
   });
 }
+
 module.exports = app;
