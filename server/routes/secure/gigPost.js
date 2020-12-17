@@ -8,9 +8,9 @@ const router = require('express').Router(),
     updateGigPost
   } = require('../../controllers/gigPost');
 
-router.post('/api/gigPosts', createGigPost);
-router.delete('/api/gigPosts', deleteGigPost);
-router.route('/api/gigPosts', getGigPost);
-router.put('/api/gigPosts', updateGigPost);
+router.get('/:id', getGigPost); //open route//
+router.post('', createGigPost); //Keep in secure//
+router.delete('/:id', deleteGigPost); //Keep in secure//
+router.patch('/:id', updateGigPost); //Keep in secure//
 
 module.exports = router;

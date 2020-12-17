@@ -1,8 +1,9 @@
 require('./db/config');
 const express = require('express'),
   path = require('path'),
-  morgan = require('morgan');
-openRoutes = require('./routes/open');
+  morgan = require('morgan'),
+  openRoutes = require('./routes/open'),
+  gigRouter = require('./routes/secure/gigPost');
 
 const app = express();
 
@@ -13,11 +14,13 @@ app.use(morgan('dev'));
 // Unauthenticated routes
 app.use(openRoutes);
 
+// Authenticated Routes
+
 // Serve any static files
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
-
+app.use('/api/gigs', gigRouter);
 // Any authentication middleware and related routing would be here.
 
 // Handle React routing, return all requests to React app
