@@ -1,10 +1,10 @@
-const Schema = mongoose.Schema;
 const mongoose = require('mongoose'),
+  Schema = mongoose.Schema,
   validator = require('validator'),
   bcrypt = require('bcryptjs'),
   jwt = require('jsonwebtoken');
 
-const UserSchema = new Schema(
+const userSchema = new Schema(
   {
     name: {
       type: String,
@@ -50,12 +50,12 @@ const UserSchema = new Schema(
     location: {
       type: String
     },
-    venueName: {
+    venue: {
       type: Boolean,
       required: true,
       default: false
     },
-    djName: {
+    dj: {
       type: Boolean,
       required: true,
       default: false
@@ -102,5 +102,5 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', userSchema);
 module.exports = { User };

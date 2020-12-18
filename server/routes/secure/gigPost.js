@@ -6,7 +6,7 @@ const router = require('express').Router(),
     deleteGigPost,
     getGigPost,
     updateGigPost
-  } = require('../../controllers/gigPost');
+  } = require('../../controllers/gigPosts');
 
 router.get('/:id', getGigPost); //open route//
 router.post('', createGigPost); //Keep in secure//

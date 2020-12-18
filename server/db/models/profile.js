@@ -18,9 +18,8 @@ const ProfileSchema = new Schema({
     type: Boolean,
     default: false
   },
-  travelWilling: {
-    type: Boolean,
-    default: false
+  location: {
+    type: String
   },
   reviews: {
     type: Boolean,
@@ -33,6 +32,10 @@ const ProfileSchema = new Schema({
   gigsOpen: {
     type: Boolean,
     default: false
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 });
 

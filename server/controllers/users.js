@@ -1,11 +1,6 @@
 const User = require('../db/models/user'),
   cloudinary = require('cloudinary').v2,
-  jwt = require('jsonwebtoken'),
-  {
-    sendWelcomeEmail,
-    sendCancellationEmail,
-    forgotPasswordEmail
-  } = require('../emails/');
+  jwt = require('jsonwebtoken');
 
 exports.fetchAllUsers = async (req, res) => {
   try {
@@ -16,6 +11,11 @@ exports.fetchAllUsers = async (req, res) => {
   }
 };
 
+/**
+ * Create a user
+ * @param {name, email, password}
+ * @return {user}
+ */
 exports.createUser = async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -25,7 +25,7 @@ exports.createUser = async (req, res) => {
       password
     });
     const token = await user.generateAuthToken();
-    sendWelcomeEmail(user.email, user.name);
+    // sendWelcomeEmail(user.email, user.name);
     res.cookie('jwt', token, {
       httpOnly: true,
       sameSite: 'Strict',
@@ -37,6 +37,11 @@ exports.createUser = async (req, res) => {
   }
 };
 
+/**
+ * @param {email, password}
+ * Login a user
+ * @return {user}
+ */
 exports.loginUser = async (req, res) => {
   console.log(req.body);
   const { email, password } = req.body;
@@ -54,6 +59,14 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+/**
+ * @param {email}
+ * Password Reset Request
+ * This route sends an email that the
+ * user must click within 10 minutes
+ * to reset their password.
+ * @return {}
+ */
 exports.requestPasswordReset = async (req, res) => {
   try {
     const { email } = req.query,
@@ -72,7 +85,11 @@ exports.requestPasswordReset = async (req, res) => {
     res.json({ error: e.toString() });
   }
 };
-
+/**
+ * @param {token}
+ * Redirect to password reset page
+ * @return {}
+ */
 exports.passwordRedirect = async (req, res) => {
   try {
     const { token } = req.params;
@@ -90,6 +107,11 @@ exports.passwordRedirect = async (req, res) => {
   }
 };
 
+/**
+ * @param {req.user}
+ * Get current user
+ * @return {user}
+ */
 exports.getCurrentUser = async (req, res) => res.json(req.user);
 
 exports.updateCurrentUser = async (req, res) => {
@@ -109,6 +131,11 @@ exports.updateCurrentUser = async (req, res) => {
   }
 };
 
+/**
+ * @param {}
+ * Logout a user
+ * @return {}
+ */
 exports.logoutUser = async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
@@ -122,6 +149,11 @@ exports.logoutUser = async (req, res) => {
   }
 };
 
+/**
+ * @param {}
+ * Logout all devices
+ * @return {}
+ */
 exports.logoutAllDevices = async (req, res) => {
   try {
     req.user.tokens = [];
@@ -132,18 +164,26 @@ exports.logoutAllDevices = async (req, res) => {
     res.status(500).send();
   }
 };
-
+/**
+ * @param {}
+ * Delete a user
+ * @return {}
+ */
 exports.deleteUser = async (req, res) => {
   try {
     await req.user.remove();
-    sendCancellationEmail(req.user.email, req.user.name);
+    // sendCancellationEmail(req.user.email, req.user.name);
     res.clearCookie('jwt');
     res.json({ message: 'user deleted' });
   } catch (error) {
     res.status(500).json({ error: error.toString() });
   }
 };
-
+/**
+ * @param {image}
+ * Upload avatar
+ * @return {}
+ */
 exports.uploadAvatar = async (req, res) => {
   try {
     const response = await cloudinary.uploader.upload(
@@ -156,7 +196,11 @@ exports.uploadAvatar = async (req, res) => {
     res.json({ error: e.toString() });
   }
 };
-
+/**
+ * @param {password}
+ * Update password
+ * @return {}
+ */
 exports.updatePassword = async (req, res) => {
   try {
     req.user.password = req.body.password;
