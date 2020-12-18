@@ -1,5 +1,5 @@
-const Schema = mongoose.Schema;
 const mongoose = require('mongoose'),
+  Schema = mongoose.Schema,
   validator = require('validator'),
   bcrypt = require('bcryptjs'),
   jwt = require('jsonwebtoken'),
@@ -133,4 +133,4 @@ userSchema.pre('remove', async function (next) {
 });
 
 const User = mongoose.model('User', userSchema);
-module.exports = User;
+module.exports = { User };

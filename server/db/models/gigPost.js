@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const gigPostSchema = new Schema(
@@ -17,7 +18,7 @@ const gigPostSchema = new Schema(
       }
     ],
     pay: {
-      type: Number,
+      type: String,
       required: true
     },
     description: {
@@ -30,10 +31,6 @@ const gigPostSchema = new Schema(
     },
     photos: {
       type: String
-    },
-    owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
     }
   },
   {
