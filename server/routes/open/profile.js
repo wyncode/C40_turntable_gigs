@@ -4,7 +4,7 @@ const router = require('express').Router(),
     getAllProfiles
   } = require('../../controllers/profiles');
 
-router.get('/:id', getSpecificProfile);
-router.get('/', getAllProfiles);
+// router.get('/:id', getSpecificProfile);
+// router.get('/', getAllProfiles);
 
 module.exports = router;

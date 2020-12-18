@@ -1,16 +1,22 @@
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const GigApplication = new Schema(
-    {
-        experience: { type: String },
-        genre: { type: String },
-        equipment: [{ type: String }],
-        musicLink: { type: String },
-    },
-    { 
-        timestamps: true 
+const GigApplicationSchema = new Schema(
+  {
+    experience: { type: String },
+    genre: { type: String },
+    equipment: [{ type: String }],
+    musicLink: { type: String },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     }
+  },
+
+  {
+    timestamps: true
+  }
 );
 
-const GigApplication = mongoose.model("GigApplication", GigApplicationSchema);
+const GigApplication = mongoose.model('GigApplication', GigApplicationSchema);
 module.exports = { GigApplication };

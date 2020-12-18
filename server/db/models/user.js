@@ -1,10 +1,10 @@
-const Schema = mongoose.Schema;
 const mongoose = require('mongoose'),
+  Schema = mongoose.Schema,
   validator = require('validator'),
   bcrypt = require('bcryptjs'),
   jwt = require('jsonwebtoken');
 
-const UserSchema = new Schema(
+const userSchema = new Schema(
   {
     name: {
       type: String,
@@ -102,5 +102,5 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', userSchema);
 module.exports = { User };

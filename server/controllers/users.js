@@ -1,11 +1,15 @@
 const User = require('../db/models/user'),
   cloudinary = require('cloudinary').v2,
-  jwt = require('jsonwebtoken'),
-  {
-    sendWelcomeEmail,
-    sendCancellationEmail,
-    forgotPasswordEmail
-  } = require('../emails/');
+  jwt = require('jsonwebtoken');
+
+exports.fetchAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+};
 
 /**
  * Create a user
@@ -21,7 +25,7 @@ exports.createUser = async (req, res) => {
       password
     });
     const token = await user.generateAuthToken();
-    sendWelcomeEmail(user.email, user.name);
+    // sendWelcomeEmail(user.email, user.name);
     res.cookie('jwt', token, {
       httpOnly: true,
       sameSite: 'Strict',
@@ -103,8 +107,6 @@ exports.passwordRedirect = async (req, res) => {
   }
 };
 
-//Authenticated Routes Below
-
 /**
  * @param {req.user}
  * Get current user
@@ -112,11 +114,6 @@ exports.passwordRedirect = async (req, res) => {
  */
 exports.getCurrentUser = async (req, res) => res.json(req.user);
 
-/**
- * @param {{updates}}
- * Update a user
- * @return {user}
- */
 exports.updateCurrentUser = async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ['name', 'email', 'password', 'avatar'];
@@ -175,7 +172,7 @@ exports.logoutAllDevices = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     await req.user.remove();
-    sendCancellationEmail(req.user.email, req.user.name);
+    // sendCancellationEmail(req.user.email, req.user.name);
     res.clearCookie('jwt');
     res.json({ message: 'user deleted' });
   } catch (error) {
