@@ -18,25 +18,33 @@ exports.getGigPost = async (req, res) => {
 };
 
 exports.updateGigPost = async (req, res) => {
-  GigPost.findById(req.params.id, function (err, gigPost) {
-    if (err) return res.send(err);
-    // gigPost.text = req.body.text
-    gigPost.location = req.body.location;
-    gigPost.timeframe = req.body.timeframe;
-    gigPost.equipment = req.body.equipment;
-    gigPost.pay = req.body.pay;
-    gigPost.description = req.body.description;
-    gigPost.genre = req.body.genre;
-    gigPost.photos = req.body.photos;
-    gigPost.timestamps = req.body.timestamps;
+  const updates = Object.keys(req.body);
+  const allowedUpdates = [
+    'location',
+    'timeframe',
+    'equipment',
+    'pay',
+    'description',
+    'genre',
+    'photos'
+  ];
 
-    console.log(gigPost);
-
-    gigPost.save(function (err, gigPost) {
-      if (err) res.send(err);
-      res.json(gigPost);
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+  if (!isValidOperation)
+    return res.status(400).send({ error: 'Invalid updates!' });
+  try {
+    const gigPost = await GigPost.findOne({
+      _id: req.params.id
     });
-  });
+    if (!gigPost) return res.status(404).json({ error: 'Post not found' });
+    updates.forEach((update) => (gigPost[update] = req.body[update]));
+    await gigPost.save();
+    res.json(gigPost);
+  } catch (e) {
+    res.status(400).json({ error: e.toString() });
+  }
 };
 
 exports.deleteGigPost = async (req, res) => {

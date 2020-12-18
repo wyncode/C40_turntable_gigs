@@ -4,6 +4,7 @@ const express = require('express'),
   morgan = require('morgan'),
   openRoutes = require('./routes/open'),
   gigRouter = require('./routes/secure/gigPost');
+applicationRouter = require('./routes/secure/gigApplication');
 
 const app = express();
 
@@ -21,6 +22,8 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
 app.use('/api/gigs', gigRouter);
+app.use('/api/application', applicationRouter);
+
 // Any authentication middleware and related routing would be here.
 
 // Handle React routing, return all requests to React app

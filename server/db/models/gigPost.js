@@ -18,7 +18,7 @@ const GigPostSchema = new Schema(
       }
     ],
     pay: {
-      type: Number,
+      type: String,
       required: true
     },
     description: {
