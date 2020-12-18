@@ -26,6 +26,10 @@ const bookingSchema = new Schema(
     paymentMethod: {
       type: String,
       required: true
+    },
+    completed: {
+      type: Boolean,
+      default: false
     }
   },
   {

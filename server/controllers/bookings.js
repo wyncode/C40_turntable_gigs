@@ -18,7 +18,6 @@ exports.fetchAllBookings = async (req, res) => {
 // Create a Booking
 // ***********************************************//
 exports.createBooking = async (req, res) => {
-  console.log('hello');
   try {
     const booking = await new Booking({
       ...req.body,
@@ -89,7 +88,7 @@ exports.getAllBookings = async (req, res) => {
 // ***********************************************//
 exports.updateBooking = async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['description', 'completed', 'dueDate'];
+  const allowedUpdates = ['eventDate', 'timeframe'];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -100,7 +99,7 @@ exports.updateBooking = async (req, res) => {
       _id: req.params.id,
       owner: req.user._id
     });
-    if (!booking) return res.status(404).json({ error: 'booking not found' });
+    if (!booking) return res.status(404).json({ error: 'Booking not found' });
     updates.forEach((update) => (booking[update] = req.body[update]));
     await booking.save();
     res.json(booking);
@@ -118,8 +117,8 @@ exports.deleteBooking = async (req, res) => {
       _id: req.params.id,
       owner: req.user._id
     });
-    if (!booking) return res.status(404).json({ error: 'booking not found' });
-    res.json({ message: 'booking has been deleted' });
+    if (!booking) return res.status(404).json({ error: 'Booking not found' });
+    res.json({ message: 'Booking has been deleted' });
   } catch (e) {
     res.status(500).json({ error: e.toString() });
   }

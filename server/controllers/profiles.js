@@ -59,8 +59,3 @@ exports.updateProfile = async (req, res) => {
     res.status(400).json({ error: e.toString() });
   }
 };
-
-//need delete
-//need remove in user model
-//need virtual relationship for almost all models
-//how to implemetn isDj isVenue for profiles and gigPosts
