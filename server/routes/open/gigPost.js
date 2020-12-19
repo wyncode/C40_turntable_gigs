@@ -1,7 +1,7 @@
 const router = require('express').Router(),
-  { getGigPost, getAllGigPosts } = require('../../controllers/gigPosts');
+  { getGigPost } = require('../../controllers/gigPosts');
 
-// router.get('/:id', getGigPost);
+router.get('/:id', getGigPost);
 // router.get('/', getAllGigPosts);
 
 module.exports = router;

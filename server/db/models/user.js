@@ -3,8 +3,9 @@ const mongoose = require('mongoose'),
   validator = require('validator'),
   bcrypt = require('bcryptjs'),
   jwt = require('jsonwebtoken'),
-  Profile = require('./Profile'),
-  GigPost = require('./GigPost');
+  Profile = require('./profile'),
+  GigPost = require('./gigPost'),
+  GigApplication = require('./gigApplication');
 
 const userSchema = new Schema(
   {
@@ -52,15 +53,9 @@ const userSchema = new Schema(
     location: {
       type: String
     },
-    venue: {
-      type: Boolean,
-      required: true,
-      default: false
-    },
     dj: {
       type: Boolean,
-      required: true,
-      default: false
+      required: true
     }
   },
   {

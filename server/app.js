@@ -2,6 +2,8 @@ require('./db/config');
 const express = require('express'),
   path = require('path'),
   morgan = require('morgan'),
+  cookieParser = require('cookie-parser'),
+  fileUpload = require('express-fileupload'),
   gigRouter = require('./routes/secure/gigPost'),
   gigApplicationRouter = require('./routes/secure/gigApplication'),
   openPostsRouter = require('./routes/open/gigPost'),
@@ -9,7 +11,8 @@ const express = require('express'),
   userRouter = require('./routes/secure/users'),
   bookingRouter = require('./routes/secure/bookings'),
   chatsRouter = require('./routes/secure/chats'),
-  openRoutes = require('./routes/open');
+  profilesRouter = require('./routes/secure/profiles'),
+  openUsersRouter = require('./routes/open/users');
 
 const app = express();
 
@@ -18,26 +21,36 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Unauthenticated routes
-app.use(openRoutes);
+
 app.use('/api/search/profiles', openProfilesRouter);
 app.use('/api/search/gigs', openPostsRouter);
 
+app.use('/api/users', openUsersRouter);
+
+app.use(cookieParser());
+
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/images'
+  })
+);
+
 // Authenticated Routes
+
+app.use('/api/gigs', gigRouter);
+app.use('/api/application', gigApplicationRouter);
+app.use('/api/user/profiles', profilesRouter);
+app.use('/api/users', userRouter);
+app.use('/api/bookings', bookingRouter);
+// app.use('/api/chats', chatsRouter);
 
 // Serve any static files
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
-app.use('/api/gigs', gigRouter);
-app.use('/api/application', gigApplicationRouter);
 
 // Any authentication middleware and related routing would be here.
-
-app.use('/api/users', userRouter);
-app.use('/api/bookings', bookingRouter);
-// app.use('/api/chats', chatsRouter);
-
-// app.use('/api/profiles', profilesRouter);
 
 // Handle React routing, return all requests to React app
 if (process.env.NODE_ENV === 'production') {

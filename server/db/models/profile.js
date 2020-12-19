@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const profileSchema = new Schema({
   about: {
-    type: String
+    type: String,
+    trim: true
   },
   socialMedia: {
     type: String
@@ -17,14 +18,16 @@ const profileSchema = new Schema({
   },
   commendations: {
     type: Boolean,
-    default: false
+    default: false,
+    trim: true
   },
   location: {
     type: String
   },
   reviews: {
     type: Boolean,
-    default: false
+    default: false,
+    trim: true
   },
   photos: {
     type: Boolean,
@@ -33,6 +36,9 @@ const profileSchema = new Schema({
   gigsOpen: {
     type: Boolean,
     default: false
+  },
+  backgroundImage: {
+    type: String
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

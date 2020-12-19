@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'),
+  cloudinary = require('cloudinary').v2,
   Profile = require('../db/models/profile');
 
 exports.createProfile = async (req, res) => {
@@ -20,7 +21,7 @@ exports.getSpecificProfile = async (req, res) => {
     return res.status(400).send('Not a valid user profile');
 
   try {
-    const profile = Profile.findOne({ _id, owner: req.user._id }); // user.name?
+    const profile = Profile.findOne({ _id, owner: req.user._id });
     if (!profile) return res.status(404).send();
 
     res.json(profile);
@@ -40,7 +41,13 @@ exports.getAllProfiles = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['about', 'socialMedia', 'music', 'location'];
+  const allowedUpdates = [
+    'about',
+    'socialMedia',
+    'music',
+    'location',
+    'backgroundImage'
+  ];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -57,5 +64,31 @@ exports.updateProfile = async (req, res) => {
     res.json(profile);
   } catch (e) {
     res.status(400).json({ error: e.toString() });
+  }
+};
+
+exports.deleteProfile = async (req, res) => {
+  try {
+    const profile = await Profile.findOneAndDelete({
+      _id: req.params.id,
+      owner: req.user._id
+    });
+    if (!profile) return res.status(404).json({ error: 'Profile not found' });
+    res.json({ message: 'Profile has been deleted' });
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+};
+
+exports.uploadBackgroundImage = async (req, res) => {
+  try {
+    const response = await cloudinary.uploader.upload(
+      req.files.avatar.tempFilePath
+    );
+    req.profile.backgroundImage = response.secure_url;
+    await req.user.save();
+    res.json(response);
+  } catch (e) {
+    res.json({ error: e.toString() });
   }
 };

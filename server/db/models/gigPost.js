@@ -23,7 +23,8 @@ const gigPostSchema = new Schema(
     },
     description: {
       type: String,
-      required: true
+      required: true,
+      trim: true
     },
     genre: {
       type: String,
