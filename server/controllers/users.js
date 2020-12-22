@@ -1,15 +1,6 @@
-const { User } = require('../db/models/user'),
+const User = require('../db/models/user'),
   cloudinary = require('cloudinary').v2,
   jwt = require('jsonwebtoken');
-
-exports.fetchAllUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (e) {
-    res.status(500).json({ error: e.toString() });
-  }
-};
 
 exports.createUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -33,7 +24,6 @@ exports.createUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
-  console.log(req.body);
   const { email, password } = req.body;
   try {
     const user = await User.findByCredentials(email, password);
@@ -46,6 +36,74 @@ exports.loginUser = async (req, res) => {
     res.json(user);
   } catch (e) {
     res.status(400).json({ error: e.toString() });
+  }
+};
+
+exports.getCurrentUser = async (req, res) => res.json(req.user);
+
+exports.updateCurrentUser = async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ['name', 'email', 'password', 'avatar', 'location'];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+  if (!isValidOperation)
+    return res.status(400).send({ error: 'invalid updates!' });
+  try {
+    updates.forEach((update) => (req.user[update] = req.body[update]));
+    await req.user.save();
+    res.json(req.user);
+  } catch (e) {
+    res.status(400).json({ error: e.toString() });
+  }
+};
+
+exports.logoutUser = async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter((token) => {
+      return token.token !== req.cookies.jwt;
+    });
+    await req.user.save();
+    res.clearCookie('jwt');
+    res.json({ message: 'Logged out' });
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+};
+
+exports.logoutAllDevices = async (req, res) => {
+  try {
+    req.user.tokens = [];
+    await req.user.save();
+    res.clearCookie('jwt');
+    res.json({ message: 'all devices logged out' });
+  } catch (e) {
+    res.status(500).send();
+  }
+};
+
+exports.deleteUser = async (req, res) => {
+  try {
+    await req.user.remove();
+    sendCancellationEmail(req.user.email, req.user.name);
+    // sendCancellationEmail(req.user.email, req.user.name);
+    res.clearCookie('jwt');
+    res.json({ message: 'user deleted' });
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+};
+
+exports.uploadAvatar = async (req, res) => {
+  try {
+    const response = await cloudinary.uploader.upload(
+      req.files.avatar.tempFilePath
+    );
+    req.user.avatar = response.secure_url;
+    await req.user.save();
+    res.json(response);
+  } catch (e) {
+    res.json({ error: e.toString() });
   }
 };
 
@@ -85,70 +143,12 @@ exports.passwordRedirect = async (req, res) => {
   }
 };
 
-exports.getCurrentUser = async (req, res) => res.json(req.user);
-
-exports.updateCurrentUser = async (req, res) => {
-  const updates = Object.keys(req.body);
-  const allowedUpdates = ['name', 'email', 'password', 'avatar', 'location'];
-  const isValidOperation = updates.every((update) =>
-    allowedUpdates.includes(update)
-  );
-  if (!isValidOperation)
-    return res.status(400).send({ error: 'Invalid updates!' });
+exports.fetchAllUsers = async (req, res) => {
   try {
-    updates.forEach((update) => (req.user[update] = req.body[update]));
-    await req.user.save();
-    res.json(req.user);
+    const users = await User.find();
+    res.json(users);
   } catch (e) {
-    res.status(400).json({ error: e.toString() });
-  }
-};
-
-exports.logoutUser = async (req, res) => {
-  try {
-    req.user.tokens = req.user.tokens.filter((token) => {
-      return token.token !== req.cookies.jwt;
-    });
-    await req.user.save();
-    res.clearCookie('jwt');
-    res.json({ message: 'logged out' });
-  } catch (error) {
-    res.status(500).json({ error: error.toString() });
-  }
-};
-
-exports.logoutAllDevices = async (req, res) => {
-  try {
-    req.user.tokens = [];
-    await req.user.save();
-    res.clearCookie('jwt');
-    res.json({ message: 'all devices logged out' });
-  } catch (e) {
-    res.status(500).send();
-  }
-};
-
-exports.deleteUser = async (req, res) => {
-  try {
-    await req.user.remove();
-    // sendCancellationEmail(req.user.email, req.user.name);
-    res.clearCookie('jwt');
-    res.json({ message: 'user deleted' });
-  } catch (error) {
-    res.status(500).json({ error: error.toString() });
-  }
-};
-
-exports.uploadAvatar = async (req, res) => {
-  try {
-    const response = await cloudinary.uploader.upload(
-      req.files.avatar.tempFilePath
-    );
-    req.user.avatar = response.secure_url;
-    await req.user.save();
-    res.json(response);
-  } catch (e) {
-    res.json({ error: e.toString() });
+    res.status(500).json({ error: e.toString() });
   }
 };
 

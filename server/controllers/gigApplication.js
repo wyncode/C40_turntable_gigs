@@ -1,12 +1,16 @@
-const { GigApplication } = require('../db/models/gigApplication');
+const GigApplication = require('../db/models/gigApplication');
 
 exports.createGigApplication = async (req, res) => {
-  const gigApplication = new GigApplication(req.body);
-  // TODO add request.user to gigApplication owner attribute//
-  gigApplication.save(function (err, doc) {
-    if (err) return res.status(400).send(err);
-    res.json(doc);
+  const gigApplication = await new GigApplication({
+    ...req.body,
+    owner: req.user._id
   });
+  try {
+    gigApplication.save();
+    res.status(201).json(gigApplication);
+  } catch (e) {
+    res.status(400).json({ error: e.toString() });
+  }
 };
 
 exports.getGigApplication = async (req, res) => {
@@ -15,6 +19,16 @@ exports.getGigApplication = async (req, res) => {
     if (err) return res.status(400).send();
     res.json(gigApplication);
   });
+};
+
+exports.getAllGigApplications = async (req, res) => {
+  try {
+    GigApplication.find().then((gigApplication) =>
+      res.status(200).json(gigApplication)
+    );
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
 };
 
 exports.updateGigApplication = async (req, res) => {
@@ -27,8 +41,8 @@ exports.updateGigApplication = async (req, res) => {
     return res.status(400).send({ error: 'Invalid updates!' });
   try {
     const gigApplication = await GigApplication.findOne({
-      _id: req.params.id
-      // TODO remove comment out when we add owner in gigApplication controller   owner: req.user._id
+      _id: req.params.id,
+      owner: req.user._id
     });
     if (!gigApplication)
       return res.status(404).json({ error: 'Application not found' });
@@ -41,11 +55,15 @@ exports.updateGigApplication = async (req, res) => {
 };
 
 exports.deleteGigApplication = async (req, res) => {
-  GigApplication.findByIdAndRemove(req.params.id, function (
-    err,
-    gigApplication
-  ) {
-    if (err) res.send(err);
-    res.json(gigApplication);
-  });
+  try {
+    const gigApplication = await GigApplication.findOneAndDelete({
+      _id: req.params.id,
+      owner: req.user._id
+    });
+    if (!gigApplication)
+      return res.status(404).json({ error: 'Gig application not found' });
+    res.json({ message: 'Gig application has been deleted' });
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
 };

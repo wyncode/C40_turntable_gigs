@@ -4,11 +4,8 @@ const router = require('express').Router(),
     getAllBookings,
     getSpecificBooking,
     updateBooking,
-    deleteBooking,
-    fetchAllBookings
+    deleteBooking
   } = require('../../controllers/bookings');
-
-router.get('/all', fetchAllBookings);
 
 router.post('/', createBooking);
 

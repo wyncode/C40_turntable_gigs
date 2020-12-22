@@ -5,7 +5,8 @@ const mongoose = require('mongoose'),
   jwt = require('jsonwebtoken'),
   Profile = require('./profile'),
   GigPost = require('./gigPost'),
-  GigApplication = require('./gigApplication');
+  GigApplication = require('./gigApplication'),
+  Booking = require('./booking');
 
 const userSchema = new Schema(
   {
@@ -39,7 +40,7 @@ const userSchema = new Schema(
         }
       }
     },
-    token: [
+    tokens: [
       {
         token: {
           type: String,
@@ -55,7 +56,8 @@ const userSchema = new Schema(
     },
     dj: {
       type: Boolean,
-      required: true
+      required: true,
+      default: true
     }
   },
   {
@@ -117,6 +119,20 @@ userSchema.virtual('gigApplications', {
   foreignField: 'owner'
 });
 
+userSchema.virtual('bookings', {
+  ref: 'Booking',
+  localField: '_id',
+  foreignField: 'owner'
+});
+
+userSchema.pre('remove', async function (next) {
+  const user = this;
+  await Booking.deleteMany({
+    owner: user._id
+  });
+  next();
+});
+
 userSchema.pre('remove', async function (next) {
   const user = this;
   await Profile.deleteMany({
@@ -142,4 +158,4 @@ userSchema.pre('remove', async function (next) {
 });
 
 const User = mongoose.model('User', userSchema);
-module.exports = { User };
+module.exports = User;

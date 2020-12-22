@@ -1,5 +1,4 @@
 const mongoose = require('mongoose'),
-  cloudinary = require('cloudinary').v2,
   Profile = require('../db/models/profile');
 
 exports.createProfile = async (req, res) => {
@@ -32,8 +31,7 @@ exports.getSpecificProfile = async (req, res) => {
 
 exports.getAllProfiles = async (req, res) => {
   try {
-    const profiles = Profile.find();
-    return res.json(profiles);
+    Profile.find().then((profile) => res.status(200).json(profile));
   } catch (e) {
     res.status(500).json({ error: e.toString() });
   }
@@ -41,13 +39,7 @@ exports.getAllProfiles = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = [
-    'about',
-    'socialMedia',
-    'music',
-    'location',
-    'backgroundImage'
-  ];
+  const allowedUpdates = ['about', 'socialMedia', 'music', 'location'];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -77,18 +69,5 @@ exports.deleteProfile = async (req, res) => {
     res.json({ message: 'Profile has been deleted' });
   } catch (e) {
     res.status(500).json({ error: e.toString() });
-  }
-};
-
-exports.uploadBackgroundImage = async (req, res) => {
-  try {
-    const response = await cloudinary.uploader.upload(
-      req.files.avatar.tempFilePath
-    );
-    req.profile.backgroundImage = response.secure_url;
-    await req.user.save();
-    res.json(response);
-  } catch (e) {
-    res.json({ error: e.toString() });
   }
 };

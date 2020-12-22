@@ -3,6 +3,7 @@ const express = require('express'),
   path = require('path'),
   morgan = require('morgan'),
   cookieParser = require('cookie-parser'),
+  passport = require('./middleware/authentication'),
   fileUpload = require('express-fileupload'),
   gigRouter = require('./routes/secure/gigPost'),
   gigApplicationRouter = require('./routes/secure/gigApplication'),
@@ -19,15 +20,13 @@ const app = express();
 //Middleware
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cookieParser());
 
 // Unauthenticated routes
 
 app.use('/api/search/profiles', openProfilesRouter);
 app.use('/api/search/gigs', openPostsRouter);
-
 app.use('/api/users', openUsersRouter);
-
-app.use(cookieParser());
 
 app.use(
   fileUpload({
@@ -35,6 +34,10 @@ app.use(
     tempFileDir: '/tmp/images'
   })
 );
+
+// Any authentication middleware and related routing would be here.
+
+app.use('/api/*', passport.authenticate('jwt', { session: false }));
 
 // Authenticated Routes
 
@@ -49,8 +52,6 @@ app.use('/api/bookings', bookingRouter);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
-
-// Any authentication middleware and related routing would be here.
 
 // Handle React routing, return all requests to React app
 if (process.env.NODE_ENV === 'production') {

@@ -32,6 +32,10 @@ const gigPostSchema = new Schema(
     },
     photos: {
       type: String
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     }
   },
   {

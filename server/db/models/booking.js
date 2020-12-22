@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose'),
+  Schema = mongoose.Schema;
 
 const bookingSchema = new Schema(
   {
@@ -30,6 +30,10 @@ const bookingSchema = new Schema(
     completed: {
       type: Boolean,
       default: false
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     }
   },
   {
@@ -37,5 +41,5 @@ const bookingSchema = new Schema(
   }
 );
 
-const Booking = ('Booking', bookingSchema);
+const Booking = mongoose.model('Booking', bookingSchema);
 module.exports = Booking;
