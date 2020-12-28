@@ -1,8 +1,10 @@
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ProfileSchema = new Schema({
+const profileSchema = new Schema({
   about: {
-    type: String
+    type: String,
+    trim: true
   },
   socialMedia: {
     type: String
@@ -16,14 +18,16 @@ const ProfileSchema = new Schema({
   },
   commendations: {
     type: Boolean,
-    default: false
+    default: false,
+    trim: true
   },
   location: {
     type: String
   },
   reviews: {
     type: Boolean,
-    default: false
+    default: false,
+    trim: true
   },
   photos: {
     type: Boolean,
@@ -39,5 +43,5 @@ const ProfileSchema = new Schema({
   }
 });
 
-const Profile = mongoose.model('Profile', ProfileSchema);
-module.exports = { Profile };
+const Profile = mongoose.model('Profile', profileSchema);
+module.exports = Profile;

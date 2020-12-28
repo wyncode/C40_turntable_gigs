@@ -2,7 +2,11 @@ const mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   validator = require('validator'),
   bcrypt = require('bcryptjs'),
-  jwt = require('jsonwebtoken');
+  jwt = require('jsonwebtoken'),
+  Profile = require('./profile'),
+  GigPost = require('./gigPost'),
+  GigApplication = require('./gigApplication'),
+  Booking = require('./booking');
 
 const userSchema = new Schema(
   {
@@ -36,7 +40,7 @@ const userSchema = new Schema(
         }
       }
     },
-    token: [
+    tokens: [
       {
         token: {
           type: String,
@@ -50,15 +54,10 @@ const userSchema = new Schema(
     location: {
       type: String
     },
-    venue: {
-      type: Boolean,
-      required: true,
-      default: false
-    },
     dj: {
       type: Boolean,
       required: true,
-      default: false
+      default: true
     }
   },
   {
@@ -102,5 +101,61 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+userSchema.virtual('gigPosts', {
+  ref: 'GigPost',
+  localField: '_id',
+  foreignField: 'owner'
+});
+
+userSchema.virtual('profiles', {
+  ref: 'Profile',
+  localField: '_id',
+  foreignField: 'owner'
+});
+
+userSchema.virtual('gigApplications', {
+  ref: 'GigApplication',
+  localField: '_id',
+  foreignField: 'owner'
+});
+
+userSchema.virtual('bookings', {
+  ref: 'Booking',
+  localField: '_id',
+  foreignField: 'owner'
+});
+
+userSchema.pre('remove', async function (next) {
+  const user = this;
+  await Booking.deleteMany({
+    owner: user._id
+  });
+  next();
+});
+
+userSchema.pre('remove', async function (next) {
+  const user = this;
+  await Profile.deleteMany({
+    owner: user._id
+  });
+  next();
+});
+
+userSchema.pre('remove', async function (next) {
+  const user = this;
+  await GigPost.deleteMany({
+    owner: user._id
+  });
+  next();
+});
+
+userSchema.pre('remove', async function (next) {
+  const user = this;
+  await GigApplication.deleteMany({
+    owner: user._id
+  });
+  next();
+});
+
 const User = mongoose.model('User', userSchema);
-module.exports = { User };
+module.exports = User;

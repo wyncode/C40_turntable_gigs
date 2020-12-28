@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const GigApplicationSchema = new Schema(
+const gigApplicationSchema = new Schema(
   {
     experience: { type: String },
     genre: { type: String },
@@ -18,5 +18,5 @@ const GigApplicationSchema = new Schema(
   }
 );
 
-const GigApplication = mongoose.model('GigApplication', GigApplicationSchema);
-module.exports = { GigApplication };
+const GigApplication = mongoose.model('GigApplication', gigApplicationSchema);
+module.exports = GigApplication;

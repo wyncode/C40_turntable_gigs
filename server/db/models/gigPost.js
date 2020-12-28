@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const GigPostSchema = new Schema(
+const gigPostSchema = new Schema(
   {
     timeframe: {
       type: String,
@@ -23,7 +23,8 @@ const GigPostSchema = new Schema(
     },
     description: {
       type: String,
-      required: true
+      required: true,
+      trim: true
     },
     genre: {
       type: String,
@@ -31,6 +32,10 @@ const GigPostSchema = new Schema(
     },
     photos: {
       type: String
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     }
   },
   {
@@ -38,5 +43,5 @@ const GigPostSchema = new Schema(
   }
 );
 
-const GigPost = mongoose.model('GigPost', GigPostSchema);
+const GigPost = mongoose.model('GigPost', gigPostSchema);
 module.exports = GigPost;

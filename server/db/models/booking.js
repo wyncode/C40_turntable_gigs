@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose'),
+  Schema = mongoose.Schema;
 
-const BookingSchema = new Schema(
+const bookingSchema = new Schema(
   {
     eventDate: {
       type: String,
@@ -26,6 +26,14 @@ const BookingSchema = new Schema(
     paymentMethod: {
       type: String,
       required: true
+    },
+    completed: {
+      type: Boolean,
+      default: false
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     }
   },
   {
@@ -33,5 +41,5 @@ const BookingSchema = new Schema(
   }
 );
 
-const Booking = ('Booking', BookingSchema);
-module.exports = { Booking };
+const Booking = mongoose.model('Booking', bookingSchema);
+module.exports = Booking;

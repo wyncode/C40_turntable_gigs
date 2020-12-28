@@ -1,12 +1,16 @@
 const GigPost = require('../db/models/gigPost');
 
 exports.createGigPost = async (req, res) => {
-  const gigPost = new GigPost(req.body);
-
-  gigPost.save(function (err, doc) {
-    if (err) return res.status(400).send(err);
-    res.json(doc);
+  const gigPost = await new GigPost({
+    ...req.body,
+    owner: req.user._id
   });
+  try {
+    gigPost.save();
+    res.status(201).json(gigPost);
+  } catch (e) {
+    res.status(400).json({ error: e.toString() });
+  }
 };
 
 exports.getGigPost = async (req, res) => {
@@ -15,6 +19,14 @@ exports.getGigPost = async (req, res) => {
     if (err) return res.status(400).send();
     res.json(gigPost);
   });
+};
+
+exports.getAllGigPosts = async (req, res) => {
+  try {
+    GigPost.find().then((gigPost) => res.status(200).json(gigPost));
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
 };
 
 exports.updateGigPost = async (req, res) => {
@@ -48,8 +60,14 @@ exports.updateGigPost = async (req, res) => {
 };
 
 exports.deleteGigPost = async (req, res) => {
-  GigPost.findByIdAndRemove(req.params.id, function (err, gigPost) {
-    if (err) res.send(err);
-    res.json(gigPost);
-  });
+  try {
+    const gigPost = await GigPost.findOneAndDelete({
+      _id: req.params.id,
+      owner: req.user._id
+    });
+    if (!gigPost) return res.status(404).json({ error: 'Gig Post not found' });
+    res.json({ message: 'Gig Post has been deleted' });
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
 };

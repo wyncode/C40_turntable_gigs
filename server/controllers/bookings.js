@@ -1,49 +1,28 @@
 const mongoose = require('mongoose'),
   Booking = require('../db/models/booking');
 
-/**
- * Fetch all user
- * @param {}
- * @return {user}
- */
-exports.fetchAllBookings = async (req, res) => {
-  try {
-    const booking = await booking.find();
-    res.json(booking);
-  } catch (e) {
-    res.status(500).json({ error: e.toString() });
-  }
-};
-// ***********************************************//
-// Create a Booking
-// ***********************************************//
 exports.createBooking = async (req, res) => {
-  console.log('hello');
+  const booking = await new Booking({
+    ...req.body,
+    owner: req.user._id
+  });
   try {
-    const booking = await new Booking({
-      ...req.body,
-      owner: req.user._id
-    });
-    await booking.save();
+    booking.save();
     res.status(201).json(booking);
   } catch (e) {
     res.status(400).json({ error: e.toString() });
   }
 };
-// ***********************************************//
-// Get a specific Booking
-// ***********************************************//
+
 exports.getSpecificBooking = async (req, res) => {
+  const _id = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(400).send('Not a valid booking id');
+
   try {
-    const _id = req.params.id;
-    if (!mongoose.Types.ObjectId.isValid(_id)) {
-      return res.status(400).send('not a valid id');
-    }
-    const booking = await Booking.findOne({
-      _id,
-      owner: req.user._id
-    });
+    const booking = await Booking.findOne({ _id, owner: req.user._id });
     if (!booking) return res.status(404).send();
+
     res.json(booking);
   } catch (e) {
     res.status(500).json({ error: e.toString() });
@@ -70,7 +49,7 @@ exports.getAllBookings = async (req, res) => {
   try {
     await req.user
       .populate({
-        path: 'booking',
+        path: 'bookings',
         match,
         options: {
           limit: parseInt(req.query.limit),
@@ -79,17 +58,15 @@ exports.getAllBookings = async (req, res) => {
         }
       })
       .execPopulate();
-    res.json(req.user.booking);
+    res.json(req.user.bookings);
   } catch (e) {
     res.status(500).json({ error: e.toString() });
   }
 };
-// ***********************************************//
-// Update a Booking
-// ***********************************************//
+
 exports.updateBooking = async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['description', 'completed', 'dueDate'];
+  const allowedUpdates = ['eventDate', 'timeframe'];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -100,7 +77,7 @@ exports.updateBooking = async (req, res) => {
       _id: req.params.id,
       owner: req.user._id
     });
-    if (!booking) return res.status(404).json({ error: 'booking not found' });
+    if (!booking) return res.status(404).json({ error: 'Booking not found' });
     updates.forEach((update) => (booking[update] = req.body[update]));
     await booking.save();
     res.json(booking);
@@ -109,17 +86,14 @@ exports.updateBooking = async (req, res) => {
   }
 };
 
-// ***********************************************//
-// Delete a Booking
-// ***********************************************//
 exports.deleteBooking = async (req, res) => {
   try {
     const booking = await Booking.findOneAndDelete({
       _id: req.params.id,
       owner: req.user._id
     });
-    if (!booking) return res.status(404).json({ error: 'booking not found' });
-    res.json({ message: 'booking has been deleted' });
+    if (!booking) return res.status(404).json({ error: 'Booking not found' });
+    res.json({ message: 'Booking has been deleted' });
   } catch (e) {
     res.status(500).json({ error: e.toString() });
   }
