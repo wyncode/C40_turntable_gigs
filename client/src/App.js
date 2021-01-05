@@ -16,7 +16,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/search/gigs" component={FindGigs} />
           <Route exact path="/search/djs" component={FindDjs} />
-          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/profile/:id" component={Profile} />
           <Route exact path="/gigs" component={Gigs} />
         </Switch>
       </BrowserRouter>

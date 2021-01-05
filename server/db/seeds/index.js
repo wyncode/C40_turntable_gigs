@@ -1,56 +1,46 @@
-// require('../config/');
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+require('../config/');
 
-// const djs = require('./data')
+const djs = require('./data');
+const User = require('../models/user'),
+  faker = require('faker'),
+  mongoose = require('mongoose');
 
-// const   User = require('../models/user'),
-//   faker = require('faker'),
-//   mongoose = require('mongoose');
+const dbReset = async () => {
+  const collections = Object.keys(mongoose.connection.collections);
+  for (const collectionName of collections) {
+    const collection = mongoose.connection.collections[collectionName];
+    await collection.deleteMany();
+  }
 
-// const dbReset = async () => {
-//   const collections = Object.keys(mongoose.connection.collections);
-//   for (const collectionName of collections) {
-//     const collection = mongoose.connection.collections[collectionName];
-//     await collection.deleteMany();
-//   }
+  await User.countDocuments({}, function (err, count) {
+    console.log('Number of users:', count);
+  });
 
-//   await User.countDocuments({}, function (err, count) {
-//     console.log('Number of users:', count);
-//   });
-//   await Task.countDocuments({}, function (err, count) {
-//     console.log('Number of tasks:', count);
-//   });
+  const venueIdArray = [];
+  const djIdArray = [];
 
-//   const userIdArray = [];
-//   djs.forEach(dj => {
-//     name: dj.name,
-//     location: dj.location,
-//     email: dj.email,
-//     password: faker.internet.password()
-//   })
+  djs.forEach(async (dj) => {
+    const newDj = await new User({
+      name: dj.name,
+      location: dj.location,
+      email: dj.email,
+      password: 'superSecret'
+    });
+    await newDj.generateAuthToken();
+    venudjIdArrayeIdArray.push(dj._id);
+  });
 
-//   for (let i = 0; i < 1000; i++) {
-//     const me = new User({
+  for (let i = 0; i < 100; i++) {
+    const venue = new User({
+      name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+      dj: false,
+      email: faker.internet.email(),
+      password: 'superSecret'
+    });
+    await venue.generateAuthToken();
+    venueIdArray.push(venue._id);
+  }
+};
 
-//     });
-//     await me.generateAuthToken();
-//     userIdArray.push(me._id);
-//   }
-
-//   for (let i = 0; i < 1000; i++) {
-//     const task = new Task({
-//       description: faker.lorem.paragraph(),
-//       completed: Boolean(Math.round(Math.random())),
-//       dueDate: faker.date.future(),
-//       owner: userIdArray[Math.floor(Math.random() * userIdArray.length)]
-//     });
-//     await task.save();
-//   }
-//   await User.countDocuments({}, function (err, count) {
-//     console.log('Number of users:', count);
-//   });
-//   await Task.countDocuments({}, function (err, count) {
-//     console.log('Number of tasks:', count);
-//   });
-// };
-
-// dbReset();
+dbReset();
