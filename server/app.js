@@ -14,6 +14,7 @@ const express = require('express'),
   chatsRouter = require('./routes/secure/chats'),
   profilesRouter = require('./routes/secure/profiles'),
   openUsersRouter = require('./routes/open/users');
+const axios = require('axios');
 
 const app = express();
 
@@ -21,6 +22,26 @@ const app = express();
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cookieParser());
+
+const getYelpAPI = async () => {
+  return axios.get(
+    'https://api.yelp.com/v3/businesses/search?location="Miami, FL"&categories="bars,breweries,musicvenues"&radius=40000',
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.YELP_API_KEY}`
+      }
+    }
+  );
+};
+
+app.get('/api/yelp', async (request, response) => {
+  try {
+    const businessData = await getYelpAPI();
+    response.json(businessData.data.businesses);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // Unauthenticated routes
 

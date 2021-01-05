@@ -5,15 +5,16 @@ const router = require('express').Router(),
     getSpecificBooking,
     updateBooking,
     deleteBooking
-  } = require('../../controllers/bookings');
+  } = require('../../controllers/bookings'),
+  { venueRole } = require('../../middleware/authorization/index');
 
-router.post('/', createBooking);
+router.post('/', venueRole(), createBooking);
 
 router.get('/:id', getSpecificBooking);
 
 router.get('/', getAllBookings);
 
-router.patch('/:id', updateBooking);
+router.patch('/:id', updateBooking); //venueRole(),
 
 router.delete('/:id', deleteBooking);
 

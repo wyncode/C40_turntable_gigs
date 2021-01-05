@@ -5,12 +5,14 @@ const router = require('express').Router(),
     getGigApplication,
     updateGigApplication,
     getAllGigApplications
-  } = require('../../controllers/gigApplication');
+  } = require('../../controllers/gigApplication'),
+  { venueRole } = require('../../middleware/authorization/index'),
+  { djRole } = require('../../middleware/authorization/index');
 
-router.get('/', getAllGigApplications);
-router.get('/:id', getGigApplication);
-router.post('/', createGigApplication);
-router.delete('/:id', deleteGigApplication);
-router.patch('/:id', updateGigApplication);
+router.get('/', venueRole(), getAllGigApplications);
+router.get('/:id', getGigApplication); //venue venueRole(),
+router.post('/', djRole(), createGigApplication);
+router.delete('/:id', deleteGigApplication); // djRole(),
+router.patch('/:id', updateGigApplication); // djRole(),
 
 module.exports = router;
