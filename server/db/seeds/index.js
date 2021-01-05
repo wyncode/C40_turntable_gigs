@@ -28,7 +28,7 @@ const dbReset = async () => {
       password: 'superSecret'
     });
     await newDj.generateAuthToken();
-    venudjIdArrayeIdArray.push(dj._id);
+    djIdArray.push(dj._id);
   });
 
   for (let i = 0; i < 100; i++) {
