@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import BookingDialog from '../components/BookingDialog';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
+  const { currentUser } = useContext(AppContext);
+  const { id } = useParams();
   const classes = useStyles();
 
   // const { currentUser, setCurrentUser, setLoading } = useContext(AppContext)
@@ -106,11 +109,13 @@ const Profile = () => {
                 <Divider variant="middle" />
                 <div className="profile-music-row">
                   <h4>Music</h4>
-                  <div className="edit-icon">
-                    <IconButton aria-label="edit">
-                      <EditIcon />
-                    </IconButton>
-                  </div>
+                  {currentUser?._id === id && (
+                    <div className="edit-icon">
+                      <IconButton aria-label="edit">
+                        <EditIcon />
+                      </IconButton>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

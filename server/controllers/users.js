@@ -152,6 +152,14 @@ exports.fetchAllUsers = async (req, res) => {
     res.status(500).json({ error: e.toString() });
   }
 };
+exports.fetchAllDjs = async (req, res) => {
+  try {
+    const djs = await User.find({ dj: true });
+    res.json(djs);
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+};
 
 exports.updatePassword = async (req, res) => {
   try {

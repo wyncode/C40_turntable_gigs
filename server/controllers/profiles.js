@@ -20,7 +20,7 @@ exports.getSpecificProfile = async (req, res) => {
     return res.status(400).send('Not a valid user profile');
 
   try {
-    const profile = Profile.findOne({ _id, owner: req.user._id });
+    const profile = Profile.findOne({ _id });
     if (!profile) return res.status(404).send();
 
     res.json(profile);
