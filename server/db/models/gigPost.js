@@ -45,3 +45,4 @@ const gigPostSchema = new Schema(
 
 const GigPost = mongoose.model('GigPost', gigPostSchema);
 module.exports = GigPost;
+//TODO missing date

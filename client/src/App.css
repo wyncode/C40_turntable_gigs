@@ -1,11 +1,316 @@
-/* JUST FOR DEMO PURPORSES, REPLACE WITH YOUR OWN CODE */
-
-#demo {
-  width: 100vw;
-  height: 100vh;
+.logo {
+  height: 30px;
+  width: 30px;
+  margin-left: 75px;
+}
+.logo:hover {
+  animation: rotation 3s infinite linear;
+  cursor: pointer;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+.hero-image {
+  background-image: url('./hero-image.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 900px;
+  margin-left: 300px;
   display: flex;
-  justify-content: space-around;
+}
+
+.hero-btn {
+  margin-top: 650px;
+  margin-left: 540px;
+}
+
+.featGigs,
+.featDjsTitle {
+  margin-left: 20%;
+  margin-top: 40px;
+}
+.featDjsTitle {
+  margin-bottom: 0;
+}
+
+.cardSub {
+  font-size: 15px;
+}
+
+.djs-hero-image {
+  background-image: url('./djsheroimage.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 1000px;
+  height: 700px;
+  box-sizing: border-box;
+  margin: auto;
+}
+
+.gigs-hero-image {
+  background-image: url('./gigsheroimage.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 1000px;
+  height: 700px;
+  box-sizing: border-box;
+  margin: auto;
+}
+
+.dj-searchbar {
+  display: flex;
+  justify-content: center;
+}
+
+#dj-search-input {
+  height: 30px;
+  width: 500px;
+  border: 0;
+  background: rgba(221, 220, 220, 0.616);
+  padding: 3px 15px;
+  border: 1px solid rgb(141, 141, 141);
+  border-radius: 50px;
+  outline: none;
+}
+
+.exploreDjs {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.filterBy {
+  color: rgb(116, 113, 113);
+  padding: 5px;
+  margin-top: 22px;
+}
+
+.explore-title {
+  margin-right: 25px;
+}
+
+.slider {
+  width: 100%;
+  height: 1000px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  display: flex;
   align-items: center;
 }
 
-/* END DEMO */
+.slide {
+  min-width: 100%;
+  height: 1000px;
+  transition: 0.5s;
+  display: flex;
+  justify-content: center;
+}
+
+#goLeft {
+  position: absolute;
+  left: 300px;
+  width: 5%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+#goRight {
+  position: absolute;
+  right: 300px;
+  width: 5%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.druiid-slide,
+.graphyte-slide {
+  display: flex;
+  flex-direction: column;
+}
+
+.druiid-slide-img,
+.graphyte-slide-img,
+.center-affairs-img,
+.gramps-img {
+  margin-top: 0;
+  width: 500px;
+  height: 500px;
+  margin: 0;
+}
+.slide-text {
+  margin: 0;
+  font-style: oblique;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+}
+
+.App {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.top-dialog-form {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.footer {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #252525;
+  position: static;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer-info {
+  color: white;
+  width: 70%;
+  box-sizing: inherit;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+}
+.footer-column-1,
+.footer-column-2,
+.footer-column-3 {
+  text-align: center;
+  width: 20%;
+}
+
+.footer-column-4 {
+  width: 100%;
+  text-align: center;
+}
+
+.subscribe-footer {
+  font-weight: 600;
+}
+
+.footer-input {
+  width: 250px;
+  padding: 10px;
+}
+
+.footer-submit {
+  cursor: pointer;
+  padding: 10px;
+  margin-left: 5px;
+  font-weight: 600;
+}
+.dj-card {
+  box-sizing: border-box;
+  margin: auto;
+  width: 60%;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-cover-img {
+  margin: auto;
+  width: 80%;
+  height: 300px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.cover-img {
+  box-sizing: inherit;
+  margin: auto;
+  width: 100%;
+  height: 300px;
+  z-index: -5;
+}
+
+.book-me-button {
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  padding: 15px;
+  z-index: 1;
+  display: flex;
+}
+
+.user-avatar {
+  border: rgba(144, 143, 137, 0.37) 1px solid;
+  width: 175px;
+  height: 175px;
+  border-radius: 50%;
+  margin-left: 50px;
+  margin-top: -150px;
+  z-index: 1;
+  position: relative;
+}
+
+.avatar-photo-icon {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-left: 190px;
+  z-index: 2;
+}
+
+.cover-img-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.profile-block {
+  padding-top: 30px;
+  width: 80%;
+  height: 800px;
+  background-color: rgba(236, 229, 219, 0.39);
+  box-sizing: border-box;
+  margin: auto;
+}
+.profile-block-row {
+  width: 100%;
+  display: flex;
+}
+.profile-info-column {
+  width: 30%;
+  border-radius: 10%;
+  background-color: white;
+  border: rgba(144, 143, 137, 0.37) 1px solid;
+  padding: 20px;
+  position: relative;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+}
+
+.profile-about-column {
+  width: 100%;
+  margin-left: 100px;
+  border-radius: 5%/15%;
+  padding: 20px;
+  background-color: white;
+  border: rgba(144, 143, 137, 0.37) 1px solid;
+  position: relative;
+}
+
+.findDjs-row-1 {
+  display: flex;
+}

@@ -4,9 +4,10 @@ const router = require('express').Router(),
     deleteGigPost,
     updateGigPost
   } = require('../../controllers/gigPosts');
+// venueRole = require('../../middleware/authorization/index');
 
-router.post('/', createGigPost);
-router.delete('/:id', deleteGigPost);
-router.patch('/:id', updateGigPost);
+router.post('/', createGigPost); //venueRole(),
+router.delete('/:id', deleteGigPost); //venueRole(),
+router.patch('/:id', updateGigPost); //venueRole(),
 
 module.exports = router;
