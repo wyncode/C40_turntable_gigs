@@ -11,8 +11,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 
-//TODO create a form tag inside of dialog and attach handleSignup
-
 export default function LoginDialog({ history }) {
   const { setCurrentUser } = useContext(AppContext);
   const [open, setOpen] = React.useState(false);

@@ -5,6 +5,8 @@ const djs = require('./data');
 const User = require('../models/user'),
   faker = require('faker'),
   mongoose = require('mongoose');
+const profiles = require('./profile');
+const Profile = require('../models/profile');
 
 const dbReset = async () => {
   const collections = Object.keys(mongoose.connection.collections);
@@ -16,31 +18,67 @@ const dbReset = async () => {
   await User.countDocuments({}, function (err, count) {
     console.log('Number of users:', count);
   });
+  await Profile.countDocuments({}, function (err, count) {
+    console.log('Number of profiles:', count);
+  });
 
   const venueIdArray = [];
   const djIdArray = [];
+  const userIdArray = [];
+  const profileIdArray = [];
 
-  djs.forEach(async (dj) => {
+  for (let i = 0; i < djs.length; i++) {
     const newDj = await new User({
-      name: dj.name,
-      location: dj.location,
-      email: dj.email,
-      password: 'superSecret'
+      name: djs[i].name,
+      location: djs[i].location,
+      email: djs[i].email,
+      avatar: djs[i].avatar,
+      password: 'superSecret',
+      dj: djs[i].dj
     });
     await newDj.generateAuthToken();
-    djIdArray.push(dj._id);
-  });
+    djIdArray.push(newDj._id);
+  }
+  for (let i = 0; i < djIdArray.length; i++) {
+    console.log(2);
+    console.log(djIdArray[i]);
+    const newProfile = new Profile({
+      about: faker.lorem.paragraph(),
+      owner: djIdArray[i]
+    });
+    await newProfile.save();
+    // profileIdArray.push(newProfile._id);
+  }
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 12; i++) {
     const venue = new User({
-      name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+      name: faker.company.companyName(),
       dj: false,
       email: faker.internet.email(),
-      password: 'superSecret'
+      password: 'superSecret',
+      location: faker.address.city(),
+      avatar: faker.image.avatar()
     });
     await venue.generateAuthToken();
     venueIdArray.push(venue._id);
   }
+
+  for (let i = 0; i < venueIdArray.length; i++) {
+    const newProfile = await new Profile({
+      about: faker.lorem.paragraph(),
+      owner: venueIdArray[i]
+    });
+    await newProfile.save();
+    profileIdArray.push(newProfile._id);
+  }
+
+  await User.countDocuments({}, function (err, count) {
+    console.log('Number of users:', count);
+  });
+
+  await Profile.countDocuments({}, function (err, count) {
+    console.log('Number of profiles:', count);
+  });
 };
 
 dbReset();

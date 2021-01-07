@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import BookingDialog from '../components/BookingDialog';
@@ -22,9 +22,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
+  const [profile, setProfile] = useState(null);
   const { currentUser } = useContext(AppContext);
   const { id } = useParams();
   const classes = useStyles();
+
+  useEffect(() => {
+    fetch(`/api/search/profiles/${id}`)
+      .then((data) => data.json())
+      .then((res) => {
+        console.log(res);
+        setProfile(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   // const { currentUser, setCurrentUser, setLoading } = useContext(AppContext)
 
@@ -123,7 +134,7 @@ const Profile = () => {
           <div className="profile-about-column">
             <div className="profile-about-row">
               <h4>About</h4>
-              <p>about text</p>
+              <p>{profile?.about}</p>
               <Divider variant="middle" />
               <div className="profile-experience-row">
                 <h4>Experience</h4>

@@ -79,7 +79,8 @@
   outline: none;
 }
 
-.exploreDjs {
+.exploreDjs,
+.exploreGigs {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -313,4 +314,11 @@
 
 .findDjs-row-1 {
   display: flex;
+}
+
+.findDjs-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
 }

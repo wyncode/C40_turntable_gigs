@@ -86,7 +86,7 @@ exports.logoutAllDevices = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     await req.user.remove();
-    sendCancellationEmail(req.user.email, req.user.name);
+    // sendCancellationEmail(req.user.email, req.user.name);
     // sendCancellationEmail(req.user.email, req.user.name);
     res.clearCookie('jwt');
     res.json({ message: 'user deleted' });
