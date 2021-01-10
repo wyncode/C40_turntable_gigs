@@ -14,6 +14,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import EditIcon from '@material-ui/icons/Edit';
+import DjMusicPlayer from '../components/DjMusicPlayer';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
+  const [preview, setPreview] = useState(null);
   const { currentUser } = useContext(AppContext);
   const { id } = useParams();
   const classes = useStyles();
@@ -43,31 +45,18 @@ const Profile = () => {
     <>
       <Navbar />
       <div className="profile-cover-img">
-        <img className="cover-img" src={CoverDefault} alt="cover-photo" />
-        <div className="cover-img-icon">
-          <input
-            accept="image/*"
-            className={classes.input}
-            id="icon-button-file"
-            type="file"
-          />
-          <label htmlFor="icon-button-file">
-            <IconButton
-              color="default"
-              aria-label="upload picture"
-              component="span"
-            >
-              <PhotoCamera />
-            </IconButton>
-          </label>
-        </div>
-        <div className="user-profile-avatar">
+        {!profile?.user?.dj ? null : (
           <img
-            className="user-avatar"
-            src={AvatarDefault}
-            alt="profile-picture"
+            className="cover-img"
+            src={
+              'https://images.unsplash.com/photo-1571428051944-a23e02fdadc9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80'
+            }
+            alt="cover-photo"
           />
-          <div className="avatar-photo-icon">
+        )}
+
+        {currentUser?._id === id && (
+          <div className="cover-img-icon">
             <input
               accept="image/*"
               className={classes.input}
@@ -84,6 +73,32 @@ const Profile = () => {
               </IconButton>
             </label>
           </div>
+        )}
+        <div className="user-profile-avatar">
+          <img
+            className="user-avatar"
+            src={preview || profile?.user.avatar || AvatarDefault}
+            alt="user-avatar"
+          />
+          {currentUser?._id === id && (
+            <div className="avatar-photo-icon">
+              <input
+                accept="image/*"
+                className={classes.input}
+                id="icon-button-file"
+                type="file"
+              />
+              <label htmlFor="icon-button-file">
+                <IconButton
+                  color="default"
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <PhotoCamera />
+                </IconButton>
+              </label>
+            </div>
+          )}
         </div>
         <div className="book-me-button">
           <BookingDialog />
@@ -93,11 +108,11 @@ const Profile = () => {
       <div className="profile-block">
         <div className="profile-block-row">
           <div className="profile-info-column">
-            <div className="user-info-row">
-              <h4>name</h4>
-              <p>location</p>
+            <div className="user-info-row" style={{ textAlign: 'center' }}>
+              <h3>{profile?.user.name}</h3>
+              <p>{profile?.user.location}</p>
               <Divider variant="middle" />
-              <div className="user-social-row">
+              <div className="user-social-row" style={{ textAlign: 'center' }}>
                 <h4>Connect</h4>
                 <IconButton
                   aria-label="instagram profile"
@@ -120,6 +135,7 @@ const Profile = () => {
                 <Divider variant="middle" />
                 <div className="profile-music-row">
                   <h4>Music</h4>
+                  <DjMusicPlayer />
                   {currentUser?._id === id && (
                     <div className="edit-icon">
                       <IconButton aria-label="edit">
@@ -134,20 +150,45 @@ const Profile = () => {
           <div className="profile-about-column">
             <div className="profile-about-row">
               <h4>About</h4>
-              <p>{profile?.about}</p>
+              <p>{profile?.profile.about}</p>
               <Divider variant="middle" />
+              {/* only djs */}
               <div className="profile-experience-row">
                 <h4>Experience</h4>
-                <p>experience text</p>
+                <p>{profile?.profile.experience}</p>
+                {/* only djs */}
                 <Divider variant="middle" />
+                {/* only djs */}
                 <div className="profile-experience-row">
                   <h4>Commendations</h4>
-                  <p>commendations from other users</p>
-                  <div className="edit-icon">
-                    <IconButton aria-label="edit">
-                      <EditIcon />
-                    </IconButton>
+                  <div className="commendations">
+                    <p>
+                      "{profile?.user.name} was an amazing DJ for a memorable
+                      night!"
+                    </p>
+                    <Divider variant="middle" />
+                    <p>"Such a talented DJ, would recommend for any event."</p>
+                    <Divider variant="middle" />
+                    <p>
+                      "Communication was very easy and the event was very
+                      successful."
+                    </p>
+                    <Divider variant="middle" />
+                    <p>
+                      "{profile?.user.name} was able to get a large crowd vibe
+                      the whole night and play a variety of underground tracks."
+                    </p>
+                    <Divider variant="middle" />
+                    <p>"10/10!"</p>
                   </div>
+                  {/* only djs */}
+                  {currentUser?._id === id && (
+                    <div className="edit-icon">
+                      <IconButton aria-label="edit">
+                        <EditIcon />
+                      </IconButton>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

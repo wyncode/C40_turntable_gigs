@@ -5,7 +5,7 @@ const djs = require('./data');
 const User = require('../models/user'),
   faker = require('faker'),
   mongoose = require('mongoose');
-const profiles = require('./profile');
+const profiles = require('./index');
 const Profile = require('../models/profile');
 
 const dbReset = async () => {
@@ -34,7 +34,8 @@ const dbReset = async () => {
       email: djs[i].email,
       avatar: djs[i].avatar,
       password: 'superSecret',
-      dj: djs[i].dj
+      dj: djs[i].dj,
+      music: djs[i].music
     });
     await newDj.generateAuthToken();
     djIdArray.push(newDj._id);
@@ -44,7 +45,8 @@ const dbReset = async () => {
     console.log(djIdArray[i]);
     const newProfile = new Profile({
       about: faker.lorem.paragraph(),
-      owner: djIdArray[i]
+      owner: djIdArray[i],
+      experience: faker.lorem.paragraph()
     });
     await newProfile.save();
     // profileIdArray.push(newProfile._id);

@@ -2,7 +2,7 @@ const faker = require('faker');
 
 const djs = [
   {
-    name: 'Druiid1',
+    name: 'Druiid',
     email: 'druiidmusic@gmail.com',
     location: 'Fort Lauderdale, FL',
     avatar:
@@ -20,11 +20,10 @@ const djs = [
     password: faker.internet.password()
   },
   {
-    name: 'Admo',
-    email: 'admo@gmail.com',
+    name: 'Khiva',
+    email: 'khiva@gmail.com',
     location: 'West Palm Beach, FL',
-    avatar:
-      'https://i.pinimg.com/564x/86/ca/e3/86cae37adb6d296b399db5df64bad6cd.jpg',
+    avatar: 'https://www.edmsauce.com/wp-content/uploads/2017/10/IMG-3979.jpg',
     dj: true,
     password: faker.internet.password()
   },
@@ -33,7 +32,7 @@ const djs = [
     email: 'yusu@gmail.com',
     location: 'Deerfield Beach, FL',
     avatar:
-      'https://factmag-images.s3.amazonaws.com/wp-content/uploads/2019/08/YuSu_pc_MalcolmLam_0.jpg',
+      'https://www.beatportal.com/wp-content/uploads/2020/01/Yu-Su-13.jpg',
     dj: true,
     password: faker.internet.password()
   },
@@ -69,7 +68,7 @@ const djs = [
     email: 'objectblue@gmail.com',
     location: 'Pembroke Pines, FL',
     avatar:
-      'https://video-images.vice.com/_uncategorized/1552391140097-R1-02964-020A.jpeg',
+      'https://4c79id2ej5i11apui01ll2wc-wpengine.netdna-ssl.com/wp-content/uploads/2019/01/Object-Blue-Portrait-Gallery-6.jpg',
     dj: true,
     password: faker.internet.password()
   },
@@ -95,7 +94,7 @@ const djs = [
     email: 'yaeji@gmail.com',
     location: 'Hollywood, FL',
     avatar:
-      'https://i.guim.co.uk/img/media/a48ebccdf9e8311c3575f36c38dc01bda31b53db/0_542_3725_2970/master/3725.jpg?width=620&quality=85&auto=format&fit=max&s=a11b5ee646cd8981192f5ee2e542880f',
+      'https://thefader-res.cloudinary.com/private_images/w_760,c_limit,f_auto,q_auto:eco/0264_4-10-2018_FADER_DBG_Yaeji-Exposure_web_elap2b/molly-goddard-top-alessandra-rich-earrings-yaeji-s-own-other-jewelry.jpg',
     dj: true,
     password: faker.internet.password()
   },
@@ -103,7 +102,8 @@ const djs = [
     name: 'LCY',
     email: 'lcy@gmail.com',
     location: 'Miami, FL',
-    avatar: 'https://i.ytimg.com/vi/SisM2xEepww/maxresdefault.jpg',
+    avatar:
+      'https://www.nitelifeonline.com/wp-content/uploads/2017/10/LUCY-Bristol-interview-copyright-Nitelife-Dominika-Scheibingeredited-2--1024x683.jpg',
     dj: true,
     password: faker.internet.password()
   }

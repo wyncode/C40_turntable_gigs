@@ -15,7 +15,8 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 275,
+    width: 300,
+    marginTop: 10,
     marginLeft: '10%'
   },
   media: {
@@ -38,44 +39,49 @@ export default function VenueCards({ business }) {
   const classes = useStyles();
 
   return business ? (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="venue avatar" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="add to favorite">
-            <FavoriteIcon />
-          </IconButton>
-        }
-        title={business.name}
-        subheader={business.city}
-      />
-      <CardMedia
-        className={classes.media}
-        image={business.image_url}
-        title=""
-      />
-      <IconButton aria-label="genre">
-        <MusicNoteIcon fontSize="small" />
-        <p className="cardSub">Genre</p>
-      </IconButton>
-      <IconButton aria-label="music format">
-        <AlbumIcon fontSize="small" />
-        <p className="cardSub">Format</p>
-      </IconButton>
-      <IconButton aria-label="pay">
-        <AttachMoneyIcon fontSize="small" />
-        <p className="cardSub">Pay</p>
-      </IconButton>
+    <div className="venue-cards">
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="venue avatar" className={classes.avatar}>
+              R
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="add to favorite">
+              <FavoriteIcon />
+            </IconButton>
+          }
+          title={business.name}
+          subheader={business.city}
+        />
+        <CardMedia
+          className={classes.media}
+          image={business.image_url}
+          title=""
+        />
+        <IconButton aria-label="genre">
+          <MusicNoteIcon fontSize="small" />
+          <p className="cardSub">Genre</p>
+        </IconButton>
+        <IconButton aria-label="music format">
+          <AlbumIcon fontSize="small" />
+          <p className="cardSub">Equipment</p>
+        </IconButton>
+        <IconButton aria-label="pay">
+          <AttachMoneyIcon fontSize="small" />
+          <p className="cardSub">Pay</p>
+        </IconButton>
 
-      <CardActions disableSpacing>
-        <Button className={classes.button} variant="outlined" color="default">
-          Apply
-        </Button>
-      </CardActions>
-    </Card>
+        <CardActions disableSpacing>
+          <Button className={classes.button} variant="outlined" color="default">
+            Apply
+          </Button>
+          <Button className={classes.button} variant="outlined" color="default">
+            View
+          </Button>
+        </CardActions>
+      </Card>
+    </div>
   ) : null;
 }

@@ -251,27 +251,34 @@
 
 .user-avatar {
   border: rgba(144, 143, 137, 0.37) 1px solid;
-  width: 175px;
-  height: 175px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
-  margin-left: 50px;
-  margin-top: -150px;
+  margin-left: 130px;
+  margin-top: -250px;
   z-index: 1;
   position: relative;
+  object-fit: cover;
 }
 
 .avatar-photo-icon {
   position: absolute;
   bottom: 0;
   left: 0;
-  margin-left: 190px;
+  margin-left: 300px;
   z-index: 2;
+  background-color: whitesmoke;
+  border: cornsilk;
+  border-radius: 50%;
 }
 
 .cover-img-icon {
   position: absolute;
   top: 0;
   right: 0;
+  background-color: whitesmoke;
+  border: cornsilk;
+  border-radius: 50%;
 }
 
 .profile-block {
@@ -291,8 +298,9 @@
   border-radius: 10%;
   background-color: white;
   border: rgba(144, 143, 137, 0.37) 1px solid;
-  padding: 20px;
+  padding: 30px;
   position: relative;
+  margin-top: 30px;
 }
 
 .edit-icon {
@@ -305,11 +313,31 @@
 .profile-about-column {
   width: 100%;
   margin-left: 100px;
-  border-radius: 5%/15%;
+  border-radius: 5%/10%;
   padding: 20px;
   background-color: white;
   border: rgba(144, 143, 137, 0.37) 1px solid;
   position: relative;
+  margin-top: 30px;
+}
+
+.commendations {
+  text-align: center;
+  font-style: oblique;
+  font-weight: 500;
+  margin-top: 50px;
+}
+
+.open-gigs-column {
+  width: 100%;
+  height: 500px;
+  border-radius: 5%/20%;
+  padding: 20px;
+  background-color: white;
+  border: rgba(144, 143, 137, 0.37) 1px solid;
+  box-sizing: border-box;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .findDjs-row-1 {
@@ -321,4 +349,13 @@
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 20px;
+}
+
+.venue-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+  border: black 2px solid;
 }

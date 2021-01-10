@@ -161,6 +161,15 @@ exports.fetchAllDjs = async (req, res) => {
   }
 };
 
+exports.fetchAllVenues = async (req, res) => {
+  try {
+    const venues = await User.find({ dj: false });
+    res.json(venues);
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+};
+
 exports.updatePassword = async (req, res) => {
   try {
     req.user.password = req.body.password;

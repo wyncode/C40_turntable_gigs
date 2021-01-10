@@ -7,12 +7,14 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles({
   root: {
     width: 300,
     marginTop: 30
+  },
+  img: {
+    height: 250
   }
 });
 
@@ -41,18 +43,18 @@ export default function FindDjsCard({ dj }) {
           <Card key={dj.id} className={classes.root}>
             <CardActionArea>
               <CardMedia
+                className={classes.img}
                 square
                 component="img"
                 alt="DJ avatar"
                 image={dj.avatar}
                 title="DJs performing"
               ></CardMedia>
-              <Chip label="Basic" variant="outlined" />
               <CardContent style={{ textAlign: 'center' }}>
                 <Typography
                   style={{ marginBottom: 0 }}
                   gutterBottom
-                  variant="h6"
+                  variant="h5"
                   component="h2"
                 >
                   {dj.name}

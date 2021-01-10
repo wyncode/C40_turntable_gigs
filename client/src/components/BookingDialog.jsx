@@ -68,7 +68,12 @@ export default function BookingDialog(props) {
 
   return (
     <div className="booking-form">
-      <Button variant="contained" color="default" onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        color="default"
+        onClick={handleClickOpen}
+        style={{ fontWeight: 600 }}
+      >
         Book me
       </Button>
 
@@ -79,7 +84,7 @@ export default function BookingDialog(props) {
         maxWidth="xs"
       >
         <div className="top-dialog-form">
-          <DialogTitle id="form-dialog-title">Book djname</DialogTitle>
+          <DialogTitle id="form-dialog-title">Booking Information</DialogTitle>
           <Button id="close-dialog-form" onClick={handleClose} color="primary">
             <CloseIcon />
           </Button>
@@ -95,7 +100,6 @@ export default function BookingDialog(props) {
               label="Venue name"
               fullWidth
               autoComplete="off"
-              required
             />
             <TextField
               onChange={handleChange}
@@ -106,7 +110,6 @@ export default function BookingDialog(props) {
               label="Venue location"
               fullWidth
               autoComplete="off"
-              required
             />
             <TextField
               id="event-date"
