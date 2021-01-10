@@ -16,6 +16,8 @@ const express = require('express'),
   openUsersRouter = require('./routes/open/users');
 const axios = require('axios');
 
+const mapApiKey = process.env.MAP_API;
+
 const app = express();
 
 //Middleware
@@ -38,6 +40,14 @@ app.get('/api/yelp', async (request, response) => {
   try {
     const businessData = await getYelpAPI();
     response.json(businessData.data.businesses);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get('/api/map', async (request, response) => {
+  try {
+    response.json(mapApiKey);
   } catch (error) {
     console.log(error);
   }
