@@ -15,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import EditIcon from '@material-ui/icons/Edit';
 import DjMusicPlayer from '../components/DjMusicPlayer';
+import VenueMaps from '../components/VenueMaps';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -133,9 +134,11 @@ const Profile = () => {
                   <TwitterIcon />
                 </IconButton>
                 <Divider variant="middle" />
+                <VenueMaps />
                 <div className="profile-music-row">
                   <h4>Music</h4>
                   <DjMusicPlayer />
+
                   {currentUser?._id === id && (
                     <div className="edit-icon">
                       <IconButton aria-label="edit">
