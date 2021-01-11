@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import SearchBar from 'material-ui-search-bar';
 
 const GigsSearchbar = ({ setSearchResults }) => {
   const history = useHistory();
@@ -7,6 +8,7 @@ const GigsSearchbar = ({ setSearchResults }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
   return (
     <div className="containerSearch">
       <div className="dj-searchbar">

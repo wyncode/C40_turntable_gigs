@@ -1,45 +1,22 @@
 import React from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
-import googleMapStyles from '../GoogleMapStyles.js';
-import axios from 'axios';
+import googleMapStyles from '../GoogleMapStyles';
 
 export class Maps extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      map: null
-    };
-  }
-
-  componentDidMount() {
-    axios
-      .get('/api/map')
-      .then((res) => {
-        this.setState({
-          map: res.data
-        });
-      })
-      .catch((err) => console.log(err));
-  }
-
   render() {
     const mapStyles = {
-      width: '400px',
-      height: '300px'
+      width: '30%',
+      height: '100%'
     };
     return (
       <Map
         google={this.props.google}
         zoom={6}
         style={mapStyles}
-        apiKey={this.state.map}
-        initialCenter={{ lat: 40.139714, lng: -84.283182 }}
+        initialCenter={{ lat: 9.761927, lng: 79.95244 }}
       >
-        <Marker
-          onClick={this.onMarkerClick}
-          name={'Center for Subtropical Affairs'}
-        />
+        <Marker position={{ lat: 9.761927, lng: 79.95244 }} />
       </Map>
     );
   }
@@ -48,5 +25,5 @@ export class Maps extends React.Component {
 Maps.defaultProps = googleMapStyles;
 
 export default GoogleApiWrapper({
-  // apiKey: this.state.map
+  apiKey: process.env.REACT_APP_MAP_API
 })(Maps);
