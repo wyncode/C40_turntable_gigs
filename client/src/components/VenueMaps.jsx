@@ -1,29 +1,41 @@
 import React from 'react';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
-import axios from 'axios';
-import GoogleMapStyles from './GoogleMapStyles';
+import ReactMapboxGl, { Layer, Feature, Marker, Popup } from 'react-mapbox-gl';
 
-export class Maps extends React.Component {
-  render() {
-    const mapStyles = {
-      width: '300px',
-      height: '250px',
-      marginTop: 20
-    };
-    return (
+const Map = ReactMapboxGl({
+  accessToken:
+    'pk.eyJ1IjoiaW1wb3N0b3IiLCJhIjoiY2s1eDk5aWl0MGZreTNtdGJuMW14cTkyciJ9.mP7ka4ZAU-sVooC4Ljg3_g'
+});
+
+const MyMap = (props) => {
+  return (
+    <div>
       <Map
-        google={this.props.google}
-        zoom={6}
-        style={mapStyles}
-        initialCenter={{ lat: 9.761927, lng: 79.95244 }}
+        style="mapbox://styles/mapbox/streets-v9"
+        containerStyle={{
+          height: '20rem',
+          width: '20rem'
+        }}
+        center={[-80.2792583, 25.9237979]}
+        zoom={[4]}
       >
-        <Marker position={{ lat: 9.761927, lng: 79.95244 }} />
+        <Marker
+          coordinates={[-80.2792583, 25.9237979]}
+          anchor="bottom"
+          style={{ position: 'absolute', top: 200 }}
+          flyToOptions={{ center: [-80.2792583, 25.9237979] }}
+        >
+          <img
+            style={{ width: '3rem' }}
+            src={
+              'http://www.pngall.com/wp-content/uploads/2017/05/Map-Marker-PNG-HD.png'
+            }
+            alt="fix me!"
+          />
+        </Marker>
       </Map>
-    );
-  }
-}
-Maps.defaultProps = GoogleMapStyles;
-export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_MAP_API
-})(Maps);
+    </div>
+  );
+};
+
+export default MyMap;
