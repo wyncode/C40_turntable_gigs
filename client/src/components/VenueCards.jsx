@@ -85,6 +85,8 @@ export default function VenueCards() {
                   size="small"
                   variant="contained"
                   color="default"
+                  component={Link}
+                  to="/applygig"
                 >
                   Apply
                 </Button>
