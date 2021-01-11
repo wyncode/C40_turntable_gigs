@@ -41,7 +41,6 @@ const dbReset = async () => {
     djIdArray.push(newDj._id);
   }
   for (let i = 0; i < djIdArray.length; i++) {
-    console.log(2);
     console.log(djIdArray[i]);
     const newProfile = new Profile({
       about: faker.lorem.paragraph(),
@@ -49,7 +48,6 @@ const dbReset = async () => {
       experience: faker.lorem.paragraph()
     });
     await newProfile.save();
-    // profileIdArray.push(newProfile._id);
   }
 
   for (let i = 0; i < 12; i++) {
@@ -59,7 +57,7 @@ const dbReset = async () => {
       email: faker.internet.email(),
       password: 'superSecret',
       location: faker.address.city(),
-      avatar: faker.image.avatar()
+      avatar: faker.random.image()
     });
     await venue.generateAuthToken();
     venueIdArray.push(venue._id);
@@ -68,7 +66,8 @@ const dbReset = async () => {
   for (let i = 0; i < venueIdArray.length; i++) {
     const newProfile = await new Profile({
       about: faker.lorem.paragraph(),
-      owner: venueIdArray[i]
+      owner: venueIdArray[i],
+      experience: faker.lorem.paragraph()
     });
     await newProfile.save();
     profileIdArray.push(newProfile._id);

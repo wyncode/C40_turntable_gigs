@@ -16,6 +16,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import EditIcon from '@material-ui/icons/Edit';
 import DjMusicPlayer from '../components/DjMusicPlayer';
 import VenueMaps from '../components/VenueMaps';
+// import Chat from '../components/Chat';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -53,7 +54,7 @@ const Profile = () => {
     <>
       <Navbar />
       <div className="profile-cover-img">
-        {!profile?.user?.dj ? null : (
+        {profile?.user?.dj ? null : (
           <img
             className="cover-img"
             src={
@@ -109,8 +110,9 @@ const Profile = () => {
           )}
         </div>
         <div className="book-me-button">
-          <BookingDialog />
+          {/* {!profile?.user?.dj ? <Chat /> : <BookingDialog />} */}
         </div>
+        <div> </div>
       </div>
 
       <div className="profile-block">

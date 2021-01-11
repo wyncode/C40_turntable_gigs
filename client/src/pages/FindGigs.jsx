@@ -1,13 +1,14 @@
 import Navbar from '../components/Navbar';
 import GigsSearchbar from '../components/GigsSearchBar';
-import UpcomingGigs from '../components/UpcomingGigs';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import AlbumIcon from '@material-ui/icons/Album';
 import EventIcon from '@material-ui/icons/Event';
 import FeatVenues from '../components/FeatVenues';
 import Footer from '../components/Footer';
-import Venues from '../components/Venues';
+// import Venues from '../components/Venues';
+
+import VenueCards from '../components/VenueCards';
 
 const FindGigs = () => {
   return (
@@ -35,8 +36,12 @@ const FindGigs = () => {
         <p className="filterBy">Date</p>
       </div>
       <GigsSearchbar />
-      <UpcomingGigs />
-      <Venues />
+      <div className="featGigs">
+        <h2>Upcoming Gigs</h2>
+      </div>
+      <div className="venue-card">
+        <VenueCards />
+      </div>
       <FeatVenues />
       <Footer />
     </>
