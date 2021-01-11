@@ -16,25 +16,33 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import EditIcon from '@material-ui/icons/Edit';
 import DjMusicPlayer from '../components/DjMusicPlayer';
 import VenueMaps from '../components/VenueMaps';
+// import Chat from '../components/Chat';
 
 const useStyles = makeStyles((theme) => ({
   input: {
     display: 'none'
   }
 }));
+const safeParse = (item) => {
+  try {
+    return JSON.parse(item);
+  } catch {
+    return null;
+  }
+};
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [preview, setPreview] = useState(null);
   const { currentUser } = useContext(AppContext);
   const { id } = useParams();
+  const [user] = useState(safeParse(sessionStorage.getItem('user')));
   const classes = useStyles();
 
   useEffect(() => {
     fetch(`/api/search/profiles/${id}`)
       .then((data) => data.json())
       .then((res) => {
-        console.log(res);
         setProfile(res);
       })
       .catch((err) => console.log(err));
@@ -46,7 +54,7 @@ const Profile = () => {
     <>
       <Navbar />
       <div className="profile-cover-img">
-        {!profile?.user?.dj ? null : (
+        {profile?.user?.dj ? null : (
           <img
             className="cover-img"
             src={
@@ -102,8 +110,9 @@ const Profile = () => {
           )}
         </div>
         <div className="book-me-button">
-          <BookingDialog />
+          {/* {!profile?.user?.dj ? <Chat /> : <BookingDialog />} */}
         </div>
+        <div> </div>
       </div>
 
       <div className="profile-block">
@@ -134,11 +143,10 @@ const Profile = () => {
                   <TwitterIcon />
                 </IconButton>
                 <Divider variant="middle" />
-                <VenueMaps />
+                {profile?.user?.dj ? <DjMusicPlayer /> : <VenueMaps />}
+
                 <div className="profile-music-row">
                   <h4>Music</h4>
-                  <DjMusicPlayer />
-
                   {currentUser?._id === id && (
                     <div className="edit-icon">
                       <IconButton aria-label="edit">
