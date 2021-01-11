@@ -5,7 +5,9 @@ import FindGigs from './pages/FindGigs';
 import FindDjs from './pages/FindDjs';
 import Profile from './pages/Profile';
 import About from './pages/About';
+import GigApplication from './pages/GigApplication';
 import { AppContextProvider } from './context/AppContext';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import './App.css';
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
           <Route exact path="/search/djs" component={FindDjs} />
           <Route exact path="/profile/:id" component={Profile} />
           <Route exact path="/about" component={About} />
+          <Route exact path="/applygig" component={GigApplication} />
         </Switch>
       </BrowserRouter>
     </AppContextProvider>
