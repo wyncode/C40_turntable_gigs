@@ -16,12 +16,42 @@ const express = require('express'),
   openUsersRouter = require('./routes/open/users');
 const axios = require('axios');
 
+const mapApiKey = process.env.MAP_API;
+
 const app = express();
 
 //Middleware
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cookieParser());
+
+const getYelpAPI = async () => {
+  return axios.get(
+    'https://api.yelp.com/v3/businesses/search?location="Miami, FL"&categories="bars,breweries,musicvenues"&radius=40000',
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.YELP_API_KEY}`
+      }
+    }
+  );
+};
+
+app.get('/api/yelp', async (request, response) => {
+  try {
+    const businessData = await getYelpAPI();
+    response.json(businessData.data.businesses);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get('/api/map', async (request, response) => {
+  try {
+    response.json(mapApiKey);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // Unauthenticated routes
 
