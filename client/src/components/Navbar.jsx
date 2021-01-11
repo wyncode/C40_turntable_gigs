@@ -6,6 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import logo from '../logo.png';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import Avatar from '@material-ui/core/Avatar';
+import { Link } from 'react-router-dom';
+import Signup from '../logged-out/SignOut';
+
+import { AppContext } from '../context/AppContext';
 
 import LoginDialog from '../logged-out/LogInDialog';
 import SignupDialog from '../logged-out/SignupDialog';
@@ -79,8 +84,42 @@ export default function Navbar(props) {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </div>
-            <LoginDialog />
-            <SignupDialog />
+            <AppContext.Consumer>
+              {(context) => (
+                <>
+                  {context.currentUser &&
+                  context.currentUser.name !== undefined ? (
+                    <>
+                      <Link to={`/profile/${context.currentUser._id}`}>
+                        <Avatar
+                          className={classes.avatar}
+                          alt="Remy Sharp"
+                          src={`/img/${context.currentUser.avatar}`}
+                        />
+                      </Link>
+                      <Signup />
+                    </>
+                  ) : (
+                    ''
+                  )}
+                </>
+              )}
+            </AppContext.Consumer>
+            <AppContext.Consumer>
+              {(context) => (
+                <>
+                  {context.currentUser &&
+                  context.currentUser.name !== undefined ? (
+                    ''
+                  ) : (
+                    <>
+                      <LoginDialog />
+                      <SignupDialog />
+                    </>
+                  )}
+                </>
+              )}
+            </AppContext.Consumer>
           </Toolbar>
         </AppBar>
       </div>

@@ -38,7 +38,9 @@ export default function LoginDialog({ history }) {
     e.preventDefault();
     try {
       const response = await axios.post('/api/users/login', formData);
+      console.log(formData);
       setCurrentUser(response.data);
+      console.log(response.data);
       sessionStorage.setItem('user', response.data);
       history.push('/');
     } catch (error) {
@@ -83,8 +85,9 @@ export default function LoginDialog({ history }) {
               autoFocus
               required
               margin="dense"
-              id="name"
+              id="password"
               label="Password"
+              name="password"
               type="password"
               fullWidth
               autoComplete="off"

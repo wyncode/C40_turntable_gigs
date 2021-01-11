@@ -19,7 +19,7 @@ const AppContextProvider = ({ children }) => {
         })
         .catch((error) => console.error(error));
     }
-  }, [currentUser, user]);
+  }, [user]);
   return (
     <AppContext.Provider
       value={{ currentUser, setCurrentUser, loading, setLoading }}
