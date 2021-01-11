@@ -75,7 +75,7 @@ export default function VenueCards() {
                 className="venue-img"
                 className={classes.media}
                 image={
-                  'https://images.unsplash.com/photo-1532285105565-5860e4cb0e95?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1428&q=80'
+                  'https://images.unsplash.com/photo-1541532713592-79a0317b6b77?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
                 }
                 title=""
               />
