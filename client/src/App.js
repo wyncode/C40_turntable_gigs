@@ -7,7 +7,6 @@ import Profile from './pages/Profile';
 import About from './pages/About';
 import GigApplication from './pages/GigApplication';
 import { AppContextProvider } from './context/AppContext';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import './App.css';
 
 function App() {
