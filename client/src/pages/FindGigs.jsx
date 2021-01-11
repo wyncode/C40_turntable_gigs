@@ -31,7 +31,7 @@ const FindGigs = () => {
         />
         <p className="filterBy">Genre</p>
         <AlbumIcon fontSize="small" id="explore-icon" className="filterBy" />
-        <p className="filterBy">Format</p>
+        <p className="filterBy">Equipment</p>
         <EventIcon fontSize="small" id="explore-icon" className="filterBy" />
         <p className="filterBy">Date</p>
       </div>

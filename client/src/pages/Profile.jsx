@@ -17,6 +17,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import DjMusicPlayer from '../components/DjMusicPlayer';
 import VenueMaps from '../components/VenueMaps';
 import Chat from '../components/Chat';
+import Reviews from '../components/Reviews';
+import Commendations from '../components/Commendations';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -171,28 +173,7 @@ const Profile = () => {
                 <Divider variant="middle" />
                 {/* only djs */}
                 <div className="profile-experience-row">
-                  <h4>Commendations</h4>
-                  <div className="commendations">
-                    <p>
-                      "{profile?.user.name} was an amazing DJ for a memorable
-                      night!"
-                    </p>
-                    <Divider variant="middle" />
-                    <p>"Such a talented DJ, would recommend for any event."</p>
-                    <Divider variant="middle" />
-                    <p>
-                      "Communication was very easy and the event was very
-                      successful."
-                    </p>
-                    <Divider variant="middle" />
-                    <p>
-                      "{profile?.user.name} was able to get a large crowd vibe
-                      the whole night and play a variety of underground tracks."
-                    </p>
-                    <Divider variant="middle" />
-                    <p>"10/10!"</p>
-                  </div>
-                  {/* only djs */}
+                  {!profile?.user?.dj ? <Reviews /> : <Commendations />}
                   {currentUser?._id === id && (
                     <div className="edit-icon">
                       <IconButton aria-label="edit">

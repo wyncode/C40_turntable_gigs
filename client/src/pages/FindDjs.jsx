@@ -29,7 +29,7 @@ const FindDjs = () => {
         />
         <p className="filterBy">Genre</p>
         <AlbumIcon fontSize="small" id="explore-icon" className="filterBy" />
-        <p className="filterBy">Format</p>
+        <p className="filterBy">Equipment</p>
       </div>
       <div>
         <DjSearchBar />

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import SearchBar from 'material-ui-search-bar';
 
 const GigsSearchbar = ({ setSearchResults }) => {
   const history = useHistory();
