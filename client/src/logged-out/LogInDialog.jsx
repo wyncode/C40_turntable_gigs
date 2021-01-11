@@ -44,7 +44,7 @@ export default function LoginDialog({ history }) {
       sessionStorage.setItem('user', response.data);
       history.push('/');
     } catch (error) {
-      alert('Login Error: ', error.error);
+      console.error(error);
     }
   };
 
