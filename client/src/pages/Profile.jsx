@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AppContext } from '../context/AppContext';
 import AvatarDefault from '../default_avatar.png';
 import Divider from '@material-ui/core/Divider';
+import CoverDefault from '../cover-default.png';
 import Footer from '../components/Footer';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -14,46 +15,46 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import EditIcon from '@material-ui/icons/Edit';
 import DjMusicPlayer from '../components/DjMusicPlayer';
-import Commendations from '../components/Commendations';
-import Reviews from '../components/Reviews';
 import VenueMaps from '../components/VenueMaps';
+// import Chat from '../components/Chat';
 
 const useStyles = makeStyles((theme) => ({
   input: {
     display: 'none'
   }
 }));
+const safeParse = (item) => {
+  try {
+    return JSON.parse(item);
+  } catch {
+    return null;
+  }
+};
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [preview, setPreview] = useState(null);
   const { currentUser } = useContext(AppContext);
   const { id } = useParams();
+  const [user] = useState(safeParse(sessionStorage.getItem('user')));
   const classes = useStyles();
 
   useEffect(() => {
     fetch(`/api/search/profiles/${id}`)
       .then((data) => data.json())
       .then((res) => {
-        console.log(res);
         setProfile(res);
       })
       .catch((err) => console.log(err));
   }, []);
 
+  // const { currentUser, setCurrentUser, setLoading } = useContext(AppContext)
+
   return (
     <>
       <Navbar />
       <div className="profile-cover-img">
-        {!profile?.user?.dj ? (
-          <img
-            className="cover-img"
-            src={
-              'https://images.unsplash.com/photo-1610051167190-0a80d5976755?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80'
-            }
-            alt="cover-photo"
-          />
-        ) : (
+        {profile?.user?.dj ? null : (
           <img
             className="cover-img"
             src={
@@ -109,8 +110,9 @@ const Profile = () => {
           )}
         </div>
         <div className="book-me-button">
-          {!profile?.user?.dj ? null : <BookingDialog />}
+          {/* {!profile?.user?.dj ? <Chat /> : <BookingDialog />} */}
         </div>
+        <div> </div>
       </div>
 
       <div className="profile-block">
@@ -141,8 +143,10 @@ const Profile = () => {
                   <TwitterIcon />
                 </IconButton>
                 <Divider variant="middle" />
+                {profile?.user?.dj ? <DjMusicPlayer /> : <VenueMaps />}
+
                 <div className="profile-music-row">
-                  {!profile?.user?.dj ? <VenueMaps /> : <DjMusicPlayer />}
+                  <h4>Music</h4>
                   {currentUser?._id === id && (
                     <div className="edit-icon">
                       <IconButton aria-label="edit">
@@ -159,18 +163,18 @@ const Profile = () => {
               <h4>About</h4>
               <p>{profile?.profile.about}</p>
               <Divider variant="middle" />
+              {/* only djs */}
               <div className="profile-experience-row">
                 <h4>Experience</h4>
                 <p>{profile?.profile.experience}</p>
-
+                {/* only djs */}
                 <Divider variant="middle" />
-
+                {/* only djs */}
                 <div className="profile-experience-row">
-                  {!profile?.user?.dj ? <Reviews /> : <Commendations />}
-                  {/* <h4>Commendations</h4>
+                  <h4>Commendations</h4>
                   <div className="commendations">
                     <p>
-                      "An amazing DJ for a memorable
+                      "{profile?.user.name} was an amazing DJ for a memorable
                       night!"
                     </p>
                     <Divider variant="middle" />
@@ -182,13 +186,13 @@ const Profile = () => {
                     </p>
                     <Divider variant="middle" />
                     <p>
-                      "A talented DJ that was able to get a large crowd vibe
+                      "{profile?.user.name} was able to get a large crowd vibe
                       the whole night and play a variety of underground tracks."
                     </p>
                     <Divider variant="middle" />
                     <p>"10/10!"</p>
                   </div>
-                */}
+                  {/* only djs */}
                   {currentUser?._id === id && (
                     <div className="edit-icon">
                       <IconButton aria-label="edit">
