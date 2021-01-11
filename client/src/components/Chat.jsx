@@ -34,7 +34,7 @@ export class Chat extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="book-me-button">
         <Widget
           handleNewUserMessage={this.handleNewUserMessage}
           handleQuickButtonClicked={this.handleQuickButtonClicked}
