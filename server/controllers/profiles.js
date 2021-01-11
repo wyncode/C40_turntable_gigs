@@ -25,8 +25,9 @@ exports.getSpecificProfile = async (req, res) => {
 
   try {
     const user = await User.findOne({ _id: req.params.id });
-    const profile = await Profile.findOne({ owner: req.params.id });
-    console.log(profile);
+    console.log(user);
+    const profile = await Profile.findOne({ owner: user._id });
+    console.log('******', profile);
     if (!profile) return res.status(404).send('profile not found');
     res.json({
       user: user,

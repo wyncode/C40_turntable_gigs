@@ -34,6 +34,8 @@ const Profile = () => {
     fetch(`/api/search/profiles/${id}`)
       .then((data) => data.json())
       .then((res) => {
+        console.log(currentUser);
+        console.log('updating profile to', res);
         setProfile(res);
       })
       .catch((err) => console.log(err));
@@ -81,7 +83,7 @@ const Profile = () => {
         <div className="user-profile-avatar">
           <img
             className="user-avatar"
-            src={preview || profile?.user.avatar || AvatarDefault}
+            src={preview || profile?.user?.avatar || AvatarDefault}
             alt="user-avatar"
           />
           {currentUser?._id === id && (
@@ -112,8 +114,8 @@ const Profile = () => {
         <div className="profile-block-row">
           <div className="profile-info-column">
             <div className="user-info-row" style={{ textAlign: 'center' }}>
-              <h3>{profile?.user.name}</h3>
-              <p>{profile?.user.location}</p>
+              <h3>{profile?.user?.name}</h3>
+              <p>{profile?.user?.location}</p>
               <Divider variant="middle" />
               <div className="user-social-row" style={{ textAlign: 'center' }}>
                 <h4>Connect</h4>
@@ -136,27 +138,27 @@ const Profile = () => {
                   <TwitterIcon />
                 </IconButton>
                 <Divider variant="middle" />
-                <div className="profile-music-row">
-                  {!profile?.user?.dj ? <VenueMaps /> : <DjMusicPlayer />}
-                  {currentUser?._id === id && (
-                    <div className="edit-icon">
-                      <IconButton aria-label="edit">
-                        <EditIcon />
-                      </IconButton>
-                    </div>
-                  )}
-                </div>
               </div>
+            </div>
+            <div className="profile-music-row">
+              {!profile?.user?.dj ? <VenueMaps /> : <DjMusicPlayer />}
+              {currentUser?._id === id && (
+                <div className="edit-icon">
+                  <IconButton aria-label="edit">
+                    <EditIcon />
+                  </IconButton>
+                </div>
+              )}
             </div>
           </div>
           <div className="profile-about-column">
             <div className="profile-about-row">
               <h4>About</h4>
-              <p>{profile?.profile.about}</p>
+              <p>{profile?.profile?.about}</p>
               <Divider variant="middle" />
               <div className="profile-experience-row">
                 <h4>Experience</h4>
-                <p>{profile?.profile.experience}</p>
+                <p>{profile?.profile?.experience}</p>
                 <Divider variant="middle" />
                 <div className="profile-experience-row">
                   {!profile?.user?.dj ? <Reviews /> : <Commendations />}

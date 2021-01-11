@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import logo from '../logo.png';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import { Link } from 'react-router-dom';
 
 import LoginDialog from '../logged-out/LogInDialog';
 import SignupDialog from '../logged-out/SignupDialog';
@@ -62,7 +63,9 @@ export default function Navbar(props) {
           style={{ backgroundColor: '#fff', color: '#000' }}
         >
           <Toolbar>
-            <img src={logo} alt="website logo" className="logo" />
+            <Link to="/">
+              <img src={logo} alt="website logo" className="logo" />
+            </Link>
             <Typography variant="h6" className={classes.title}>
               Turntable Gigs
             </Typography>
