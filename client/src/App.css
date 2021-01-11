@@ -252,12 +252,12 @@ body {
 }
 
 .book-me-button {
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  padding: 15px;
-  z-index: 1;
-  display: flex;
+  bottom: 0 !important;
+  right: 0 !important;
+  position: absolute !important;
+  padding: 15px !important;
+  z-index: 1 !important;
+  display: flex !important;
 }
 
 .user-avatar {

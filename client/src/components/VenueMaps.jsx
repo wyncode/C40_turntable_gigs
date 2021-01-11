@@ -5,24 +5,6 @@ import axios from 'axios';
 import GoogleMapStyles from './GoogleMapStyles';
 
 export class Maps extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      map: null
-    };
-  }
-
-  componentDidMount() {
-    axios
-      .get('/api/map')
-      .then((res) => {
-        this.setState({
-          map: res.data
-        });
-      })
-      .catch((err) => console.log(err));
-  }
-
   render() {
     const mapStyles = {
       width: '300px',
@@ -34,18 +16,14 @@ export class Maps extends React.Component {
         google={this.props.google}
         zoom={6}
         style={mapStyles}
-        apiKey={this.state.map}
-        initialCenter={{ lat: 40.139714, lng: -84.283182 }}
+        initialCenter={{ lat: 9.761927, lng: 79.95244 }}
       >
-        <Marker
-          onClick={this.onMarkerClick}
-          name={'Center for Subtropical Affairs'}
-        />
+        <Marker position={{ lat: 9.761927, lng: 79.95244 }} />
       </Map>
     );
   }
 }
 Maps.defaultProps = GoogleMapStyles;
 export default GoogleApiWrapper({
-  // apiKey: this.state.map
+  apiKey: process.env.REACT_APP_MAP_API
 })(Maps);

@@ -16,7 +16,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import EditIcon from '@material-ui/icons/Edit';
 import DjMusicPlayer from '../components/DjMusicPlayer';
 import VenueMaps from '../components/VenueMaps';
-// import Chat from '../components/Chat';
+import Chat from '../components/Chat';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -110,7 +110,7 @@ const Profile = () => {
           )}
         </div>
         <div className="book-me-button">
-          {/* {!profile?.user?.dj ? <Chat /> : <BookingDialog />} */}
+          {!profile?.user?.dj ? <Chat /> : <BookingDialog />}
         </div>
         <div> </div>
       </div>
