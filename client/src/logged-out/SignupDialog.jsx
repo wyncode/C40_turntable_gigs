@@ -35,6 +35,7 @@ export default function SignupDialog({ history }) {
       const response = await axios.post('/api/users/', formData);
       sessionStorage.setItem('user', response.data);
       setCurrentUser(response.data.user);
+      console.log(response.data.user);
       handleClose();
       push('/');
     } catch (error) {

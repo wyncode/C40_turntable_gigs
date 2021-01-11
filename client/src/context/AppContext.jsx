@@ -19,6 +19,7 @@ const AppContextProvider = ({ children }) => {
         })
         .catch((error) => console.error(error));
     }
+    console.log(currentUser);
   }, [currentUser, user]);
   return (
     <AppContext.Provider
