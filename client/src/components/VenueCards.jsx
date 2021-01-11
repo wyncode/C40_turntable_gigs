@@ -12,6 +12,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import AlbumIcon from '@material-ui/icons/Album';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +73,13 @@ export default function VenueCards({ business }) {
       </IconButton>
 
       <CardActions disableSpacing>
-        <Button className={classes.button} variant="outlined" color="default">
+        <Button
+          className={classes.button}
+          variant="outlined"
+          color="default"
+          component={Link}
+          to="/applygig"
+        >
           Apply
         </Button>
       </CardActions>
