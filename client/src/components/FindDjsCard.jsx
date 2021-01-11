@@ -70,12 +70,11 @@ export default function FindDjsCard({ dj }) {
             </CardActionArea>
             <CardActions>
               <Typography variant="body1" component="p">
-                <Link
-                  to={`/profile/${dj._id}`}
-                  style={{ color: 'black', textAlign: 'center' }}
-                >
-                  view profile{' '}
-                </Link>
+                <div className="dj-card-link">
+                  <Link to={`/profile/${dj._id}`} style={{ color: 'black' }}>
+                    view profile{' '}
+                  </Link>
+                </div>
               </Typography>
             </CardActions>
           </Card>

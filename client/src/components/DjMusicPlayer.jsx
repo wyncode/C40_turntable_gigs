@@ -1,8 +1,6 @@
 import React, { useState, useEffect, createRef } from 'react';
 import '../App.css';
 
-//TODO add profile music link
-
 import loadscript from 'load-script';
 
 function DjMusicPlayer() {

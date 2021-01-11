@@ -1,4 +1,6 @@
-# Final Project
+# Turntable Gigs
+
+An app that allows DJs and venues to connect in one place. Venues are able to create an account, browse DJs, style a profile, and create posts for gigs they are hosting. DJs are able to create an account, browse venues, style a profile, and apply for open gigs.
 
 ## Setup
 
@@ -17,8 +19,6 @@
 Open [http://localhost:3000](http://localhost:3000) to view your local React app in the browser. The page will reload if you make edits.
 
 ## To deploy
-
-NOTE: Heroku specifically runs `npm start`, so don't remove that from your package.json file.
 
 - `heroku create your-app-name`
 - `heroku config:set MONGODB_URL=<insertYourAtlasDbUri>`

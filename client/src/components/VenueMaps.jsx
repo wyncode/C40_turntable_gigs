@@ -1,13 +1,15 @@
 import React from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
-import googleMapStyles from '../GoogleMapStyles';
+import axios from 'axios';
+import GoogleMapStyles from './GoogleMapStyles';
 
 export class Maps extends React.Component {
   render() {
     const mapStyles = {
-      width: '30%',
-      height: '100%'
+      width: '300px',
+      height: '250px',
+      marginTop: 20
     };
     return (
       <Map
@@ -21,9 +23,7 @@ export class Maps extends React.Component {
     );
   }
 }
-
-Maps.defaultProps = googleMapStyles;
-
+Maps.defaultProps = GoogleMapStyles;
 export default GoogleApiWrapper({
   apiKey: process.env.REACT_APP_MAP_API
 })(Maps);

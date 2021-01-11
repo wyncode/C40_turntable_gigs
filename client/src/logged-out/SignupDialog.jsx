@@ -30,7 +30,6 @@ export default function SignupDialog({ history }) {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    console.log(formData);
     try {
       const response = await axios.post('/api/users/', formData);
       sessionStorage.setItem('user', response.data);
@@ -62,22 +61,27 @@ export default function SignupDialog({ history }) {
         </div>
         <form id="signup-form" onSubmit={handleSignUp}>
           <DialogContent>
-            <p>I am a:</p>
-            <label>DJ</label>
-            <input
-              type="radio"
-              id="dj-selection"
-              name="dj"
-              value="true"
-            ></input>
-            <label>Venue</label>
-            <input
-              type="radio"
-              id="venue-selection"
-              name="dj"
-              value="false"
-            ></input>
+            <div className="signup-radio">
+              <p className="radio-prompt">I am a:</p>
 
+              <input
+                className="radio-button"
+                type="radio"
+                id="dj-selection"
+                name="dj"
+                value="true"
+              ></input>
+              <label className="radio-button">DJ</label>
+
+              <input
+                className="radio-button"
+                type="radio"
+                id="venue-selection"
+                name="dj"
+                value="false"
+              ></input>
+              <label className="radio-button">Venue</label>
+            </div>
             <TextField
               onChange={handleChange}
               autoFocus
