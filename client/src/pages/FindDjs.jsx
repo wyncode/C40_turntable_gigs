@@ -5,7 +5,6 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import AlbumIcon from '@material-ui/icons/Album';
 import FindDjsCard from '../components/FindDjsCard';
 import FeatDjs from '../components/FeatDjs';
-import Pagination from '@material-ui/lab/Pagination';
 import Footer from '../components/Footer';
 
 const FindDjs = () => {
@@ -36,14 +35,6 @@ const FindDjs = () => {
         <DjSearchBar />
         <div className="dj-card">
           <FindDjsCard />
-        </div>
-        <div className="pagination">
-          <Pagination
-            count={10}
-            variant="outlined"
-            shape="rounded"
-            color="primary"
-          />
         </div>
         <FeatDjs />
       </div>

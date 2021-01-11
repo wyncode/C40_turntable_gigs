@@ -86,7 +86,7 @@ exports.logoutAllDevices = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     await req.user.remove();
-    sendCancellationEmail(req.user.email, req.user.name);
+    // sendCancellationEmail(req.user.email, req.user.name);
     // sendCancellationEmail(req.user.email, req.user.name);
     res.clearCookie('jwt');
     res.json({ message: 'user deleted' });
@@ -156,6 +156,15 @@ exports.fetchAllDjs = async (req, res) => {
   try {
     const djs = await User.find({ dj: true });
     res.json(djs);
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+};
+
+exports.fetchAllVenues = async (req, res) => {
+  try {
+    const venues = await User.find({ dj: false });
+    res.json(venues);
   } catch (e) {
     res.status(500).json({ error: e.toString() });
   }

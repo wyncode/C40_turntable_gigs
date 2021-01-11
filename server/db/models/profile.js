@@ -9,11 +9,7 @@ const profileSchema = new Schema({
   socialMedia: {
     type: String
   },
-  music: {
-    type: Boolean,
-    default: false
-  },
-  events: {
+  experience: {
     type: String
   },
   commendations: {

@@ -4,8 +4,8 @@ import VenueSlider from './VenueSlider';
 const FeatVenues = () => {
   return (
     <>
-      <div className="featVenuesTitle">
-        <h2>Featured Venues</h2>
+      <div className="featGigs">
+        <h2>Featured Venue</h2>
       </div>
       <VenueSlider />
     </>

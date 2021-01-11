@@ -1,13 +1,14 @@
 const mongoose = require('mongoose'),
-  Profile = require('../db/models/profile');
+  Profile = require('../db/models/profile'),
+  User = require('../db/models/user');
 
 exports.createProfile = async (req, res) => {
-  const profile = await new Profile({
-    ...req.body,
-    owner: req.user._id
-  });
   try {
-    profile.save();
+    const profile = await new Profile({
+      ...req.body,
+      owner: req.user._id
+    });
+    await profile.save();
     res.status(201).json(profile);
   } catch (e) {
     res.status(400).json({ error: e.toString() });
@@ -16,14 +17,21 @@ exports.createProfile = async (req, res) => {
 
 exports.getSpecificProfile = async (req, res) => {
   const _id = req.params.id;
+  console.log(_id);
+
+  // console.log(req.user.name)
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(400).send('Not a valid user profile');
 
   try {
-    const profile = Profile.findOne({ _id });
-    if (!profile) return res.status(404).send();
-
-    res.json(profile);
+    const user = await User.findOne({ _id: req.params.id });
+    const profile = await Profile.findOne({ owner: req.params.id });
+    console.log(profile);
+    if (!profile) return res.status(404).send('profile not found');
+    res.json({
+      user: user,
+      profile: profile
+    });
   } catch (e) {
     res.status(500).json({ error: e.toString() });
   }

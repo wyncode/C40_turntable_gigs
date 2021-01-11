@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -6,84 +6,80 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import Druiid from '../druiidSlide.png';
-import Graphyte from '../graphyteSlide.png';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
-    width: 200
+    width: 300,
+    marginTop: 30
+  },
+  img: {
+    height: 250
   }
 });
 
-export default function FindDjsCard() {
+export default function FindDjsCard({ dj }) {
   const classes = useStyles();
+  const [djs, setDjs] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/users/djs')
+      .then((data) => {
+        return data.json();
+      })
+      .then((res) => {
+        console.log(res);
+        setDjs(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
-    <>
-      <div className="findDjs-row-1">
-        <Card className={classes.root}>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              alt="DJs performing"
-              height="140"
-              image={Druiid}
-              title="DJs performing"
-            />
-            <CardContent style={{ textAlign: 'center' }}>
-              <Typography
-                style={{ marginBottom: 0 }}
-                gutterBottom
-                variant="h6"
-                component="h2"
-              >
-                Druiid
+    <div className="findDjs-cards">
+      {djs.map((dj) => {
+        return (
+          <Card key={dj.id} className={classes.root}>
+            <CardActionArea>
+              <CardMedia
+                className={classes.img}
+                square
+                component="img"
+                alt="DJ avatar"
+                image={dj.avatar}
+                title="DJs performing"
+              ></CardMedia>
+              <CardContent style={{ textAlign: 'center' }}>
+                <Typography
+                  style={{ marginBottom: 0 }}
+                  gutterBottom
+                  variant="h5"
+                  component="h2"
+                >
+                  {dj.name}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="textSecondary"
+                  component="p"
+                >
+                  {dj.location}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <Typography variant="body1" component="p">
+                <div className="dj-card-link">
+                  <Link to={`/profile/${dj._id}`} style={{ color: 'black' }}>
+                    view profile{' '}
+                  </Link>
+                </div>
               </Typography>
-              <Typography variant="caption" color="textSecondary" component="p">
-                Fort Lauderdale, FL
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Typography variant="body1" component="p">
-              <a href="#" style={{ color: 'black' }}>
-                view profile
-              </a>
-            </Typography>
-          </CardActions>
-        </Card>
-        <Card className={classes.root}>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              alt="DJs performing"
-              height="140"
-              image={Graphyte}
-              title="DJs performing"
-            />
-            <CardContent style={{ textAlign: 'center' }}>
-              <Typography
-                style={{ marginBottom: 0 }}
-                gutterBottom
-                variant="h6"
-                component="h2"
-              >
-                Graphyte
-              </Typography>
-              <Typography variant="caption" color="textSecondary" component="p">
-                Fort Lauderdale, FL
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Typography variant="body1" component="p">
-              <a href="#" style={{ color: 'black' }}>
-                view profile
-              </a>
-            </Typography>
-          </CardActions>
-        </Card>
-      </div>
-    </>
+            </CardActions>
+          </Card>
+        );
+      })}
+    </div>
   );
 }

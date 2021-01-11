@@ -6,7 +6,8 @@ import Footer from '../components/Footer';
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    padding: '8px 16px'
   }
 }));
 

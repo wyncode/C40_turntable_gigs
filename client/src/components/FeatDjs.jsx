@@ -5,7 +5,7 @@ const FeatDjs = () => {
   return (
     <>
       <div className="featDjsTitle">
-        <h2>Featured Artists</h2>
+        <h2>Featured Artist</h2>
       </div>
       <Slider />
     </>

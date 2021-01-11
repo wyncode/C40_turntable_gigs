@@ -11,8 +11,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 
-//TODO create a form tag inside of dialog and attach handleSignup
-
 export default function LoginDialog({ history }) {
   const { setCurrentUser } = useContext(AppContext);
   const [open, setOpen] = React.useState(false);
@@ -38,8 +36,9 @@ export default function LoginDialog({ history }) {
     e.preventDefault();
     try {
       const response = await axios.post('/api/users/login', formData);
-      setCurrentUser(response.data);
       sessionStorage.setItem('user', response.data);
+      setCurrentUser(response.data);
+      handleClose();
       history.push('/');
     } catch (error) {
       alert('Login Error: ', error.error);
