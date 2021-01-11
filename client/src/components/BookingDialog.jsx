@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
+      marginLeft: 85,
       width: '25ch'
     }
   }
@@ -60,6 +61,7 @@ export default function BookingDialog(props) {
       const response = await axios.post('/api/bookings', formData);
       setBooking(response.data);
       sessionStorage.setItem('booking', response.data);
+      handleClose();
       // history.push('/');
     } catch (error) {
       alert('Booking Error: ', error.error);

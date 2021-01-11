@@ -36,8 +36,9 @@ export default function LoginDialog({ history }) {
     e.preventDefault();
     try {
       const response = await axios.post('/api/users/login', formData);
-      setCurrentUser(response.data);
       sessionStorage.setItem('user', response.data);
+      setCurrentUser(response.data);
+      handleClose();
       history.push('/');
     } catch (error) {
       alert('Login Error: ', error.error);

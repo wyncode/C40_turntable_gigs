@@ -4,7 +4,7 @@ import VenueSlider from './VenueSlider';
 const FeatVenues = () => {
   return (
     <>
-      <div className="featVenuesTitle">
+      <div className="featGigs">
         <h2>Featured Venues</h2>
       </div>
       <VenueSlider />

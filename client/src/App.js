@@ -4,11 +4,8 @@ import Home from './pages/Home';
 import FindGigs from './pages/FindGigs';
 import FindDjs from './pages/FindDjs';
 import Profile from './pages/Profile';
-import Gigs from './pages/Gigs';
 import { AppContextProvider } from './context/AppContext';
 import './App.css';
-
-// /search/gigs/:id
 
 function App() {
   return (
@@ -19,7 +16,6 @@ function App() {
           <Route exact path="/search/gigs" component={FindGigs} />
           <Route exact path="/search/djs" component={FindDjs} />
           <Route exact path="/profile/:id" component={Profile} />
-          <Route exact path="/gigs/" component={Gigs} />
         </Switch>
       </BrowserRouter>
     </AppContextProvider>
