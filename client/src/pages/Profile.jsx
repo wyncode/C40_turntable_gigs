@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AppContext } from '../context/AppContext';
 import AvatarDefault from '../default_avatar.png';
 import Divider from '@material-ui/core/Divider';
-import CoverDefault from '../cover-default.png';
 import Footer from '../components/Footer';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -15,48 +14,44 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import EditIcon from '@material-ui/icons/Edit';
 import DjMusicPlayer from '../components/DjMusicPlayer';
+import Commendations from '../components/Commendations';
+import Reviews from '../components/Reviews';
 import VenueMaps from '../components/VenueMaps';
 import Chat from '../components/Chat';
-import Reviews from '../components/Reviews';
-import Commendations from '../components/Commendations';
 
 const useStyles = makeStyles((theme) => ({
   input: {
     display: 'none'
   }
 }));
-const safeParse = (item) => {
-  try {
-    return JSON.parse(item);
-  } catch {
-    return null;
-  }
-};
-
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [preview, setPreview] = useState(null);
   const { currentUser } = useContext(AppContext);
   const { id } = useParams();
-  const [user] = useState(safeParse(sessionStorage.getItem('user')));
   const classes = useStyles();
-
   useEffect(() => {
     fetch(`/api/search/profiles/${id}`)
       .then((data) => data.json())
       .then((res) => {
+        console.log(res);
         setProfile(res);
       })
       .catch((err) => console.log(err));
   }, []);
-
-  // const { currentUser, setCurrentUser, setLoading } = useContext(AppContext)
-
   return (
     <>
       <Navbar />
       <div className="profile-cover-img">
-        {profile?.user?.dj ? null : (
+        {!profile?.user?.dj ? (
+          <img
+            className="cover-img"
+            src={
+              'https://images.unsplash.com/photo-1610051167190-0a80d5976755?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80'
+            }
+            alt="cover-photo"
+          />
+        ) : (
           <img
             className="cover-img"
             src={
@@ -65,7 +60,6 @@ const Profile = () => {
             alt="cover-photo"
           />
         )}
-
         {currentUser?._id === id && (
           <div className="cover-img-icon">
             <input
@@ -114,9 +108,7 @@ const Profile = () => {
         <div className="book-me-button">
           {!profile?.user?.dj ? <Chat /> : <BookingDialog />}
         </div>
-        <div> </div>
       </div>
-
       <div className="profile-block">
         <div className="profile-block-row">
           <div className="profile-info-column">
@@ -145,10 +137,8 @@ const Profile = () => {
                   <TwitterIcon />
                 </IconButton>
                 <Divider variant="middle" />
-                {profile?.user?.dj ? <DjMusicPlayer /> : <VenueMaps />}
-
                 <div className="profile-music-row">
-                  <h4>Music</h4>
+                  {!profile?.user?.dj ? <VenueMaps /> : <DjMusicPlayer />}
                   {currentUser?._id === id && (
                     <div className="edit-icon">
                       <IconButton aria-label="edit">
@@ -165,13 +155,10 @@ const Profile = () => {
               <h4>About</h4>
               <p>{profile?.profile.about}</p>
               <Divider variant="middle" />
-              {/* only djs */}
               <div className="profile-experience-row">
                 <h4>Experience</h4>
                 <p>{profile?.profile.experience}</p>
-                {/* only djs */}
                 <Divider variant="middle" />
-                {/* only djs */}
                 <div className="profile-experience-row">
                   {!profile?.user?.dj ? <Reviews /> : <Commendations />}
                   {currentUser?._id === id && (
@@ -191,5 +178,4 @@ const Profile = () => {
     </>
   );
 };
-
 export default Profile;
