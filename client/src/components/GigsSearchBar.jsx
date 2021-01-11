@@ -7,6 +7,7 @@ const GigsSearchbar = ({ setSearchResults }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
   return (
     <div className="containerSearch">
       <div className="dj-searchbar">

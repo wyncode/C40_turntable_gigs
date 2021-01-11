@@ -5,7 +5,7 @@ const FeatVenues = () => {
   return (
     <>
       <div className="featGigs">
-        <h2>Featured Venues</h2>
+        <h2>Featured Venue</h2>
       </div>
       <VenueSlider />
     </>

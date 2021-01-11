@@ -1,5 +1,7 @@
 import React from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+
+import axios from 'axios';
 import GoogleMapStyles from './GoogleMapStyles';
 
 export class Maps extends React.Component {
@@ -14,17 +16,14 @@ export class Maps extends React.Component {
         google={this.props.google}
         zoom={6}
         style={mapStyles}
-        initialCenter={{ lat: 40.139714, lng: -84.283182 }}
+        initialCenter={{ lat: 9.761927, lng: 79.95244 }}
       >
-        <Marker
-          onClick={this.onMarkerClick}
-          name={'Center for Subtropical Affairs'}
-        />
+        <Marker position={{ lat: 9.761927, lng: 79.95244 }} />
       </Map>
     );
   }
 }
 Maps.defaultProps = GoogleMapStyles;
 export default GoogleApiWrapper({
-  apiKey: process.env.MAP_API
+  apiKey: process.env.REACT_APP_MAP_API
 })(Maps);

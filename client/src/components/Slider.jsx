@@ -38,7 +38,6 @@ const Slider = () => {
         <button id="goRight" onClick={goRight}>
           <KeyboardArrowRightIcon fontSize="large" />
         </button>
-        <div></div>
       </div>
     </>
   );
