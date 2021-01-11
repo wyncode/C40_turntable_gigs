@@ -34,7 +34,6 @@ const Profile = () => {
     fetch(`/api/search/profiles/${id}`)
       .then((data) => data.json())
       .then((res) => {
-        console.log(res);
         setProfile(res);
       })
       .catch((err) => console.log(err));
