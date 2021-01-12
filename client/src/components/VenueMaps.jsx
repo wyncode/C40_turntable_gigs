@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ReactMapboxGl, { Layer, Feature, Marker, Popup } from 'react-mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const Map = ReactMapboxGl({
   accessToken:
@@ -14,7 +15,9 @@ const MyMap = (props) => {
         style="mapbox://styles/mapbox/streets-v9"
         containerStyle={{
           height: '20rem',
-          width: '20rem'
+          width: '20rem',
+          marginTop: '20px',
+          marginLeft: '26px'
         }}
         center={[-80.2792583, 25.9237979]}
         zoom={[4]}
@@ -22,7 +25,7 @@ const MyMap = (props) => {
         <Marker
           coordinates={[-80.2792583, 25.9237979]}
           anchor="bottom"
-          style={{ position: 'absolute', top: 200 }}
+          //   style={{ position: 'absolute', top: 200 }}
           flyToOptions={{ center: [-80.2792583, 25.9237979] }}
         >
           <img

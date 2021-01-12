@@ -14,7 +14,7 @@ const Chat = () => {
   const { push } = useHistory();
   useEffect(() => {
     addResponseMessage(
-      'Hi! We would love to book for our next Gig! Whens a good time talk?😃'
+      'Hi! We would love to book you for our next Gig! When is a good time talk?😃'
     );
     setQuickButtons(buttons);
   }, []);
@@ -37,7 +37,7 @@ const Chat = () => {
         handleNewUserMessage={handleNewUserMessage}
         handleQuickButtonClicked={handleQuickButtonClicked}
         // profileAvatar={'text'}
-        title="Club Diamond"
+        title="Dave the Venue Manager"
         subtitle="Apply to one of our gigs today!!!"
       />
     </div>
